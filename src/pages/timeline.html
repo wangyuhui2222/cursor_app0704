@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>时间轴 - 人生记录</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <style>
+        .timeline-line {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 18px;
+            width: 2px;
+            background-color: #e5e7eb;
+            z-index: 0;
+        }
+        
+        .timeline-point {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .timeline-content {
+            margin-left: 40px;
+        }
+        
+        .year-marker {
+            position: relative;
+            z-index: 2;
+            margin-bottom: 20px;
+            margin-left: 15px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- 状态栏 -->
+    <div class="status-bar">
+        <div>9:41</div>
+        <div>
+            <i class="fas fa-signal"></i>
+            <i class="fas fa-wifi ml-1"></i>
+            <i class="fas fa-battery-full ml-1"></i>
+        </div>
+    </div>
+    
+    <!-- 页面头部 -->
+    <div class="page-header">
+        <div class="flex items-center">
+            <h1 class="text-xl font-bold">时间轴</h1>
+        </div>
+        <div class="flex items-center">
+            <button class="p-2">
+                <i class="fas fa-filter text-gray-600"></i>
+            </button>
+            <button class="p-2">
+                <i class="fas fa-search text-gray-600"></i>
+            </button>
+        </div>
+    </div>
+    
+    <!-- 主页内容区域 -->
+    <div class="page-content pb-24">
+        <!-- 时间轴筛选选项 -->
+        <div class="flex overflow-x-auto mb-6 pb-2 -mx-4 px-4">
+            <button class="flex-shrink-0 bg-indigo-600 text-white px-4 py-2 rounded-full text-sm mr-2">
+                全部
+            </button>
+            <button class="flex-shrink-0 bg-white text-gray-700 px-4 py-2 rounded-full text-sm mr-2 shadow-sm">
+                <i class="fas fa-graduation-cap mr-1 text-indigo-600"></i>教育
+            </button>
+            <button class="flex-shrink-0 bg-white text-gray-700 px-4 py-2 rounded-full text-sm mr-2 shadow-sm">
+                <i class="fas fa-plane mr-1 text-green-600"></i>旅行
+            </button>
+            <button class="flex-shrink-0 bg-white text-gray-700 px-4 py-2 rounded-full text-sm mr-2 shadow-sm">
+                <i class="fas fa-award mr-1 text-red-600"></i>荣誉
+            </button>
+            <button class="flex-shrink-0 bg-white text-gray-700 px-4 py-2 rounded-full text-sm mr-2 shadow-sm">
+                <i class="fas fa-briefcase mr-1 text-blue-600"></i>工作
+            </button>
+            <button class="flex-shrink-0 bg-white text-gray-700 px-4 py-2 rounded-full text-sm mr-2 shadow-sm">
+                <i class="fas fa-heart mr-1 text-pink-600"></i>感情
+            </button>
+        </div>
+        
+        <!-- 时间轴 -->
+        <div class="relative">
+            <div class="timeline-line"></div>
+            
+            <!-- 2023年 -->
+            <div class="year-marker">
+                <div class="inline-block bg-indigo-600 text-white px-3 py-1 rounded-lg text-sm font-medium">
+                    2023
+                </div>
+            </div>
+            
+            <!-- 事件1 -->
+            <div class="mb-6 relative">
+                <div class="timeline-point">
+                    <div class="w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center">
+                        <i class="fas fa-graduation-cap text-white text-xs"></i>
+                    </div>
+                </div>
+                <div class="timeline-content mt-2">
+                    <a href="event_detail.html" class="block bg-white rounded-xl shadow-sm overflow-hidden">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1527631746610-bca00a040d60?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="毕业典礼" class="w-full h-40 object-cover">
+                        </div>
+                        <div class="p-4">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="font-bold text-gray-800">大学毕业典礼</h3>
+                                <span class="text-xs text-gray-500">2023.06.18</span>
+                            </div>
+                            <p class="text-sm text-gray-600 line-clamp-2 mb-3">这是我人生中重要的一天，四年大学生活画上了圆满的句号，我与同学们一起参加了毕业典礼...</p>
+                            <div class="flex items-center text-xs text-gray-500">
+                                <i class="fas fa-map-marker-alt mr-1"></i>
+                                <span>北京大学</span>
+                                <span class="mx-2">·</span>
+                                <i class="fas fa-image mr-1"></i>
+                                <span>12 张照片</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- 事件2 -->
+            <div class="mb-6 relative">
+                <div class="timeline-point">
+                    <div class="w-8 h-8 rounded-full bg-green-600 flex items-center justify-center">
+                        <i class="fas fa-plane text-white text-xs"></i>
+                    </div>
+                </div>
+                <div class="timeline-content mt-2">
+                    <a href="event_detail.html" class="block bg-white rounded-xl shadow-sm overflow-hidden">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1527786356703-4b100091cd2c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="旅行" class="w-full h-40 object-cover">
+                        </div>
+                        <div class="p-4">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="font-bold text-gray-800">日本东京之旅</h3>
+                                <span class="text-xs text-gray-500">2023.05.03</span>
+                            </div>
+                            <p class="text-sm text-gray-600 line-clamp-2 mb-3">第一次去日本，游览了东京塔、浅草寺等著名景点，品尝了地道的日本料理，这次旅行给我留下了深刻的印象...</p>
+                            <div class="flex items-center text-xs text-gray-500">
+                                <i class="fas fa-map-marker-alt mr-1"></i>
+                                <span>东京，日本</span>
+                                <span class="mx-2">·</span>
+                                <i class="fas fa-image mr-1"></i>
+                                <span>36 张照片</span>
+                                <span class="mx-2">·</span>
+                                <i class="fas fa-video mr-1"></i>
+                                <span>4 个视频</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- 事件3 -->
+            <div class="mb-6 relative">
+                <div class="timeline-point">
+                    <div class="w-8 h-8 rounded-full bg-red-600 flex items-center justify-center">
+                        <i class="fas fa-award text-white text-xs"></i>
+                    </div>
+                </div>
+                <div class="timeline-content mt-2">
+                    <a href="event_detail.html" class="block bg-white rounded-xl shadow-sm overflow-hidden">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="荣誉证书" class="w-full h-40 object-cover">
+                        </div>
+                        <div class="p-4">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="font-bold text-gray-800">获得年度优秀员工奖</h3>
+                                <span class="text-xs text-gray-500">2023.01.15</span>
+                            </div>
+                            <p class="text-sm text-gray-600 line-clamp-2 mb-3">经过一年的努力工作，我被公司评为年度优秀员工，这是对我工作的肯定和认可...</p>
+                            <div class="flex items-center text-xs text-gray-500">
+                                <i class="fas fa-map-marker-alt mr-1"></i>
+                                <span>科技有限公司</span>
+                                <span class="mx-2">·</span>
+                                <i class="fas fa-image mr-1"></i>
+                                <span>5 张照片</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- 2022年 -->
+            <div class="year-marker">
+                <div class="inline-block bg-indigo-600 text-white px-3 py-1 rounded-lg text-sm font-medium">
+                    2022
+                </div>
+            </div>
+            
+            <!-- 事件4 -->
+            <div class="mb-6 relative">
+                <div class="timeline-point">
+                    <div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center">
+                        <i class="fas fa-briefcase text-white text-xs"></i>
+                    </div>
+                </div>
+                <div class="timeline-content mt-2">
+                    <a href="event_detail.html" class="block bg-white rounded-xl shadow-sm overflow-hidden">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="入职" class="w-full h-40 object-cover">
+                        </div>
+                        <div class="p-4">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="font-bold text-gray-800">入职科技公司</h3>
+                                <span class="text-xs text-gray-500">2022.07.05</span>
+                            </div>
+                            <p class="text-sm text-gray-600 line-clamp-2 mb-3">毕业后我正式入职了梦想中的互联网公司，开始了我的职业生涯，非常期待未来的发展...</p>
+                            <div class="flex items-center text-xs text-gray-500">
+                                <i class="fas fa-map-marker-alt mr-1"></i>
+                                <span>北京市海淀区</span>
+                                <span class="mx-2">·</span>
+                                <i class="fas fa-image mr-1"></i>
+                                <span>8 张照片</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- 事件5 -->
+            <div class="mb-6 relative">
+                <div class="timeline-point">
+                    <div class="w-8 h-8 rounded-full bg-pink-600 flex items-center justify-center">
+                        <i class="fas fa-heart text-white text-xs"></i>
+                    </div>
+                </div>
+                <div class="timeline-content mt-2">
+                    <a href="event_detail.html" class="block bg-white rounded-xl shadow-sm overflow-hidden">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="恋爱" class="w-full h-40 object-cover">
+                        </div>
+                        <div class="p-4">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="font-bold text-gray-800">与小红的相遇</h3>
+                                <span class="text-xs text-gray-500">2022.03.14</span>
+                            </div>
+                            <p class="text-sm text-gray-600 line-clamp-2 mb-3">在朋友聚会上认识了小红，我们一见如故，聊了很多共同话题，后来开始了交往...</p>
+                            <div class="flex items-center text-xs text-gray-500">
+                                <i class="fas fa-map-marker-alt mr-1"></i>
+                                <span>星巴克咖啡厅</span>
+                                <span class="mx-2">·</span>
+                                <i class="fas fa-image mr-1"></i>
+                                <span>14 张照片</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- 加载更多 -->
+            <div class="text-center py-4">
+                <button class="bg-white text-indigo-600 border border-indigo-600 px-4 py-2 rounded-full text-sm font-medium">
+                    加载更多记录
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 底部导航栏 -->
+    <div class="bottom-nav">
+        <a href="home.html" class="nav-item">
+            <i class="fas fa-home"></i>
+            <span>首页</span>
+        </a>
+        <a href="timeline.html" class="nav-item active">
+            <i class="fas fa-clock"></i>
+            <span>时间轴</span>
+        </a>
+        <a href="upload.html" class="nav-item">
+            <div class="w-12 h-12 rounded-full bg-indigo-600 flex items-center justify-center -mt-6">
+                <i class="fas fa-plus text-white text-xl"></i>
+            </div>
+        </a>
+        <a href="gallery.html" class="nav-item">
+            <i class="fas fa-images"></i>
+            <span>相册</span>
+        </a>
+        <a href="profile.html" class="nav-item">
+            <i class="fas fa-user"></i>
+            <span>我的</span>
+        </a>
+    </div>
+</body>
+</html> 

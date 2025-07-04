@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学业 - 人生记录</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <style>
+        .edu-stage {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .edu-stage::before {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background-color: #e5e7eb;
+            z-index: 0;
+        }
+        
+        .edu-stage:last-child::before {
+            height: 24px;
+        }
+        
+        .stage-dot {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+        
+        .stage-content {
+            position: relative;
+            margin-left: 10px;
+        }
+        
+        .album-item {
+            position: relative;
+            height: 120px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .album-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .album-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 12px;
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+            color: white;
+        }
+
+        .achievement-item {
+            position: relative;
+            border-radius: 12px;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            padding: 12px;
+            margin-bottom: 10px;
+        }
+        
+        .skill-progress {
+            height: 6px;
+            background-color: #e5e7eb;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        
+        .skill-bar {
+            height: 100%;
+            border-radius: 3px;
+        }
+        
+        .tab-button {
+            padding: 10px 18px;
+            border-radius: 100px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        
+        .tab-button.active {
+            background-color: #6366f1;
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- 状态栏 -->
+    <div class="status-bar">
+        <div>9:41</div>
+        <div>
+            <i class="fas fa-signal"></i>
+            <i class="fas fa-wifi ml-1"></i>
+            <i class="fas fa-battery-full ml-1"></i>
+        </div>
+    </div>
+    
+    <!-- 页面头部 -->
+    <div class="page-header">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center">
+                <button class="mr-2" onclick="history.back()">
+                    <i class="fas fa-arrow-left text-gray-600"></i>
+                </button>
+                <h1 class="text-xl font-bold">学业经历</h1>
+            </div>
+            <div>
+                <button class="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center">
+                    <i class="fas fa-sliders-h text-indigo-600"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 学业阶段选择 -->
+    <div class="overflow-x-auto px-4 py-2 mb-4">
+        <div class="flex space-x-2 w-max">
+            <button class="tab-button active">全部</button>
+            <button class="tab-button bg-gray-100">小学</button>
+            <button class="tab-button bg-gray-100">初中</button>
+            <button class="tab-button bg-gray-100">高中</button>
+            <button class="tab-button bg-gray-100">大学</button>
+            <button class="tab-button bg-gray-100">研究生</button>
+        </div>
+    </div>
+    
+    <!-- 主页内容区域 -->
+    <div class="page-content pb-20">
+        <!-- 学业概览卡片 -->
+        <div class="px-4 mb-6">
+            <div class="bg-white rounded-xl overflow-hidden shadow-sm">
+                <div class="relative h-36 bg-gradient-to-r from-indigo-500 to-purple-600">
+                    <div class="absolute inset-0 flex items-center justify-between px-6">
+                        <div class="text-white">
+                            <h3 class="text-2xl font-bold mb-1">学业足迹</h3>
+                            <p class="text-white text-opacity-90">1998 - 2012</p>
+                        </div>
+                        <div class="w-16 h-16 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
+                            <i class="fas fa-graduation-cap text-white text-2xl"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="p-4">
+                    <div class="grid grid-cols-3 gap-4 mb-4">
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-indigo-600">14</div>
+                            <div class="text-xs text-gray-500">学习年数</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-green-600">4</div>
+                            <div class="text-xs text-gray-500">教育阶段</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-amber-600">12</div>
+                            <div class="text-xs text-gray-500">荣誉证书</div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center">
+                        <div class="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
+                            <div class="flex h-full">
+                                <div class="bg-blue-500 h-full" style="width: 33%"></div>
+                                <div class="bg-green-500 h-full" style="width: 25%"></div>
+                                <div class="bg-yellow-500 h-full" style="width: 17%"></div>
+                                <div class="bg-purple-500 h-full" style="width: 25%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex justify-between text-xs text-gray-500 mt-1">
+                        <span>小学</span>
+                        <span>初中</span>
+                        <span>高中</span>
+                        <span>大学</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 教育时间线 -->
+        <div class="px-4 mb-6">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-lg font-bold text-gray-800">教育经历</h2>
+                <button class="text-indigo-600 text-sm">
+                    <i class="fas fa-sort-amount-down mr-1"></i>排序
+                </button>
+            </div>
+            
+            <!-- 大学 -->
+            <div class="edu-stage">
+                <div class="stage-dot bg-indigo-600"></div>
+                <div class="stage-content">
+                    <div class="bg-white rounded-xl p-4 shadow-sm mb-3">
+                        <div class="flex items-start justify-between mb-2">
+                            <div>
+                                <h3 class="font-bold text-gray-800">北京大学</h3>
+                                <p class="text-sm text-gray-500">计算机科学与技术 | 本科</p>
+                            </div>
+                            <div class="text-sm text-gray-500">2008-2012</div>
+                        </div>
+                        
+                        <div class="text-sm text-gray-600 mb-3">
+                            大学四年期间主修计算机科学与技术，辅修了经济学。参加了多个社团和比赛，获得优秀毕业生称号。
+                        </div>
+                        
+                        <!-- 大学分类相册 -->
+                        <div class="text-sm font-medium text-gray-700 mb-2">相册分类</div>
+                        <div class="grid grid-cols-3 gap-2 mb-3">
+                            <div class="album-item">
+                                <img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="album-image">
+                                <div class="album-overlay">
+                                    <div class="text-sm font-medium">社团活动</div>
+                                </div>
+                            </div>
+                            <div class="album-item">
+                                <img src="https://images.unsplash.com/photo-1627556704290-2b1f5853ff78?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="album-image">
+                                <div class="album-overlay">
+                                    <div class="text-sm font-medium">课程学习</div>
+                                </div>
+                            </div>
+                            <div class="album-item">
+                                <img src="https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="album-image">
+                                <div class="album-overlay">
+                                    <div class="text-sm font-medium">毕业季</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 学年选择器 -->
+                        <div class="flex mb-3 border-b border-gray-200">
+                            <button class="px-3 py-2 text-sm font-medium text-indigo-600 border-b-2 border-indigo-600">大一</button>
+                            <button class="px-3 py-2 text-sm font-medium text-gray-500">大二</button>
+                            <button class="px-3 py-2 text-sm font-medium text-gray-500">大三</button>
+                            <button class="px-3 py-2 text-sm font-medium text-gray-500">大四</button>
+                        </div>
+                        
+                        <!-- 成就列表 -->
+                        <div class="space-y-3">
+                            <div class="achievement-item">
+                                <div class="flex items-start">
+                                    <div class="w-8 h-8 rounded-lg bg-indigo-100 flex items-center justify-center mr-3 flex-shrink-0">
+                                        <i class="fas fa-award text-indigo-600"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-medium text-gray-800">新生奖学金</h4>
+                                        <p class="text-xs text-gray-500 mb-1">2008年10月</p>
+                                        <p class="text-sm text-gray-600">入学后第一学期获得的三等奖学金</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="achievement-item">
+                                <div class="flex items-start">
+                                    <div class="w-8 h-8 rounded-lg bg-green-100 flex items-center justify-center mr-3 flex-shrink-0">
+                                        <i class="fas fa-users text-green-600"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-medium text-gray-800">加入计算机协会</h4>
+                                        <p class="text-xs text-gray-500 mb-1">2008年9月</p>
+                                        <p class="text-sm text-gray-600">成为计算机协会的一员，参与技术交流</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="achievement-item">
+                                <div class="flex items-start">
+                                    <div class="w-8 h-8 rounded-lg bg-amber-100 flex items-center justify-center mr-3 flex-shrink-0">
+                                        <i class="fas fa-trophy text-amber-600"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-medium text-gray-800">程序设计竞赛三等奖</h4>
+                                        <p class="text-xs text-gray-500 mb-1">2009年4月</p>
+                                        <p class="text-sm text-gray-600">参加校内程序设计竞赛获得三等奖</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 高中 -->
+            <div class="edu-stage">
+                <div class="stage-dot bg-green-600"></div>
+                <div class="stage-content">
+                    <div class="bg-white rounded-xl p-4 shadow-sm mb-3">
+                        <div class="flex items-start justify-between mb-2">
+                            <div>
+                                <h3 class="font-bold text-gray-800">北京市第四中学</h3>
+                                <p class="text-sm text-gray-500">理科班</p>
+                            </div>
+                            <div class="text-sm text-gray-500">2005-2008</div>
+                        </div>
+                        
+                        <div class="text-sm text-gray-600 mb-3">
+                            高中三年担任班级学习委员，参加了数学竞赛和物理竞赛，获得了市级二等奖。
+                        </div>
+                        
+                        <!-- 高中分类相册 -->
+                        <div class="text-sm font-medium text-gray-700 mb-2">相册分类</div>
+                        <div class="grid grid-cols-3 gap-2">
+                            <div class="album-item">
+                                <img src="https://images.unsplash.com/photo-1588072432836-e10032774350?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="album-image">
+                                <div class="album-overlay">
+                                    <div class="text-sm font-medium">班级活动</div>
+                                </div>
+                            </div>
+                            <div class="album-item">
+                                <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="album-image">
+                                <div class="album-overlay">
+                                    <div class="text-sm font-medium">竞赛</div>
+                                </div>
+                            </div>
+                            <div class="album-item">
+                                <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="album-image">
+                                <div class="album-overlay">
+                                    <div class="text-sm font-medium">同学合影</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 初中 -->
+            <div class="edu-stage">
+                <div class="stage-dot bg-amber-600"></div>
+                <div class="stage-content">
+                    <div class="bg-white rounded-xl p-4 shadow-sm mb-3">
+                        <div class="flex items-start justify-between mb-2">
+                            <div>
+                                <h3 class="font-bold text-gray-800">北京市第二中学</h3>
+                                <p class="text-sm text-gray-500">初中部</p>
+                            </div>
+                            <div class="text-sm text-gray-500">2002-2005</div>
+                        </div>
+                        
+                        <div class="text-sm text-gray-600 mb-3">
+                            初中三年担任班级体育委员，参加了学校足球队，获得了区级比赛第二名。
+                        </div>
+                        
+                        <!-- 初中分类相册 -->
+                        <div class="text-sm font-medium text-gray-700 mb-2">相册分类</div>
+                        <div class="grid grid-cols-3 gap-2">
+                            <div class="album-item">
+                                <img src="https://images.unsplash.com/photo-1526675368509-120c45de1cdf?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="album-image">
+                                <div class="album-overlay">
+                                    <div class="text-sm font-medium">体育活动</div>
+                                </div>
+                            </div>
+                            <div class="album-item">
+                                <img src="https://images.unsplash.com/photo-1516979187457-637abb4f9353?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="album-image">
+                                <div class="album-overlay">
+                                    <div class="text-sm font-medium">课堂学习</div>
+                                </div>
+                            </div>
+                            <div class="album-item">
+                                <img src="https://images.unsplash.com/photo-1511988617509-a57c8a288659?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="album-image">
+                                <div class="album-overlay">
+                                    <div class="text-sm font-medium">春游</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 小学 -->
+            <div class="edu-stage">
+                <div class="stage-dot bg-purple-600"></div>
+                <div class="stage-content">
+                    <div class="bg-white rounded-xl p-4 shadow-sm">
+                        <div class="flex items-start justify-between mb-2">
+                            <div>
+                                <h3 class="font-bold text-gray-800">北京市实验小学</h3>
+                            </div>
+                            <div class="text-sm text-gray-500">1998-2002</div>
+                        </div>
+                        
+                        <div class="text-sm text-gray-600 mb-3">
+                            小学时期爱好广泛，参加了绘画兴趣班和围棋兴趣班，多次获得校内比赛奖项。
+                        </div>
+                        
+                        <!-- 小学分类相册 -->
+                        <div class="text-sm font-medium text-gray-700 mb-2">相册分类</div>
+                        <div class="grid grid-cols-3 gap-2">
+                            <div class="album-item">
+                                <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="album-image">
+                                <div class="album-overlay">
+                                    <div class="text-sm font-medium">兴趣班</div>
+                                </div>
+                            </div>
+                            <div class="album-item">
+                                <img src="https://images.unsplash.com/photo-1576402187878-974f70c890a5?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="album-image">
+                                <div class="album-overlay">
+                                    <div class="text-sm font-medium">班级合影</div>
+                                </div>
+                            </div>
+                            <div class="album-item">
+                                <img src="https://images.unsplash.com/photo-1472162072942-cd5147eb3902?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="album-image">
+                                <div class="album-overlay">
+                                    <div class="text-sm font-medium">课间活动</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 学术技能 -->
+        <div class="px-4 mb-6">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-lg font-bold text-gray-800">学术技能</h2>
+                <button class="text-indigo-600 text-sm">
+                    <i class="fas fa-chart-bar mr-1"></i>详细分析
+                </button>
+            </div>
+            
+            <div class="bg-white rounded-xl p-4 shadow-sm">
+                <div class="space-y-4">
+                    <div>
+                        <div class="flex items-center justify-between mb-1">
+                            <div class="text-sm font-medium text-gray-700">编程能力</div>
+                            <div class="text-xs text-gray-500">精通</div>
+                        </div>
+                        <div class="skill-progress">
+                            <div class="skill-bar bg-indigo-600" style="width: 95%"></div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="flex items-center justify-between mb-1">
+                            <div class="text-sm font-medium text-gray-700">数学</div>
+                            <div class="text-xs text-gray-500">优秀</div>
+                        </div>
+                        <div class="skill-progress">
+                            <div class="skill-bar bg-green-600" style="width: 85%"></div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="flex items-center justify-between mb-1">
+                            <div class="text-sm font-medium text-gray-700">英语</div>
+                            <div class="text-xs text-gray-500">良好</div>
+                        </div>
+                        <div class="skill-progress">
+                            <div class="skill-bar bg-amber-600" style="width: 75%"></div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="flex items-center justify-between mb-1">
+                            <div class="text-sm font-medium text-gray-700">物理</div>
+                            <div class="text-xs text-gray-500">良好</div>
+                        </div>
+                        <div class="skill-progress">
+                            <div class="skill-bar bg-blue-600" style="width: 70%"></div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="flex items-center justify-between mb-1">
+                            <div class="text-sm font-medium text-gray-700">文学</div>
+                            <div class="text-xs text-gray-500">中等</div>
+                        </div>
+                        <div class="skill-progress">
+                            <div class="skill-bar bg-purple-600" style="width: 60%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-4 text-center">
+                    <button class="text-indigo-600 text-sm font-medium">
+                        查看全部技能 (12)
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 证书与荣誉 -->
+        <div class="px-4">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-lg font-bold text-gray-800">证书与荣誉</h2>
+                <a href="#" class="text-indigo-600 text-sm">全部</a>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-3">
+                <div class="bg-white rounded-xl overflow-hidden shadow-sm">
+                    <div class="h-24 bg-indigo-50 flex items-center justify-center">
+                        <i class="fas fa-certificate text-indigo-600 text-3xl"></i>
+                    </div>
+                    <div class="p-3">
+                        <h3 class="font-medium text-gray-800 text-sm">优秀毕业生</h3>
+                        <p class="text-xs text-gray-500">北京大学 · 2012年</p>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-xl overflow-hidden shadow-sm">
+                    <div class="h-24 bg-green-50 flex items-center justify-center">
+                        <i class="fas fa-medal text-green-600 text-3xl"></i>
+                    </div>
+                    <div class="p-3">
+                        <h3 class="font-medium text-gray-800 text-sm">数学竞赛二等奖</h3>
+                        <p class="text-xs text-gray-500">北京市 · 2007年</p>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-xl overflow-hidden shadow-sm">
+                    <div class="h-24 bg-amber-50 flex items-center justify-center">
+                        <i class="fas fa-award text-amber-600 text-3xl"></i>
+                    </div>
+                    <div class="p-3">
+                        <h3 class="font-medium text-gray-800 text-sm">全国大学生程序设计大赛</h3>
+                        <p class="text-xs text-gray-500">三等奖 · 2011年</p>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-xl overflow-hidden shadow-sm">
+                    <div class="h-24 bg-purple-50 flex items-center justify-center">
+                        <i class="fas fa-star text-purple-600 text-3xl"></i>
+                    </div>
+                    <div class="p-3">
+                        <h3 class="font-medium text-gray-800 text-sm">英语六级证书</h3>
+                        <p class="text-xs text-gray-500">CET-6 · 2010年</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-4 text-center mb-6">
+                <button class="text-indigo-600 text-sm font-medium">
+                    加载更多
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 底部导航栏 -->
+    <div class="bottom-nav">
+        <a href="home.html" class="bottom-nav-item">
+            <i class="fas fa-home"></i>
+            <span>首页</span>
+        </a>
+        <a href="timeline.html" class="bottom-nav-item">
+            <i class="fas fa-clock"></i>
+            <span>时间线</span>
+        </a>
+        <a href="upload.html" class="bottom-nav-item">
+            <div class="upload-button">
+                <i class="fas fa-plus"></i>
+            </div>
+        </a>
+        <a href="map.html" class="bottom-nav-item">
+            <i class="fas fa-map-marker-alt"></i>
+            <span>地图</span>
+        </a>
+        <a href="profile.html" class="bottom-nav-item">
+            <i class="fas fa-user"></i>
+            <span>我的</span>
+        </a>
+    </div>
+</body>
+</html> 

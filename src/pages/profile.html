@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人资料 - 人生记录</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <style>
+        .profile-header {
+            position: relative;
+            height: 180px;
+            background-image: linear-gradient(to right, #6366f1, #8b5cf6);
+            border-radius: 0 0 30px 30px;
+            overflow: hidden;
+        }
+        
+        .profile-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('https://images.unsplash.com/photo-1547891654-e66ed7ebb968?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.2;
+        }
+        
+        .profile-avatar {
+            position: absolute;
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background-color: white;
+            padding: 3px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid #f3f4f6;
+        }
+        
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+        
+        .menu-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- 状态栏 -->
+    <div class="status-bar text-white">
+        <div>9:41</div>
+        <div>
+            <i class="fas fa-signal"></i>
+            <i class="fas fa-wifi ml-1"></i>
+            <i class="fas fa-battery-full ml-1"></i>
+        </div>
+    </div>
+    
+    <!-- 个人资料头部 -->
+    <div class="profile-header">
+        <div class="flex justify-between items-center h-16 px-4 relative z-10">
+            <h1 class="text-xl font-bold text-white">个人资料</h1>
+            <button class="text-white">
+                <i class="fas fa-cog text-lg"></i>
+            </button>
+        </div>
+        
+        <div class="profile-avatar">
+            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80" alt="用户头像">
+        </div>
+    </div>
+    
+    <!-- 个人信息 -->
+    <div class="pt-16 pb-6 text-center">
+        <h2 class="text-xl font-bold text-gray-800">张小明</h2>
+        <p class="text-gray-600 mt-1">梦想是环游世界的程序员</p>
+        <div class="flex justify-center items-center mt-2">
+            <div class="text-xs bg-indigo-100 text-indigo-600 px-2 py-1 rounded-full">
+                <i class="fas fa-map-marker-alt mr-1"></i>北京
+            </div>
+            <div class="mx-2 text-gray-300">|</div>
+            <div class="text-xs bg-green-100 text-green-600 px-2 py-1 rounded-full">
+                <i class="fas fa-code mr-1"></i>软件工程师
+            </div>
+        </div>
+    </div>
+    
+    <!-- 统计数据 -->
+    <div class="px-4">
+        <div class="bg-white rounded-xl flex justify-around p-4 mb-6 shadow-sm">
+            <div class="text-center">
+                <div class="text-2xl font-bold text-indigo-600">42</div>
+                <div class="text-xs text-gray-500">事件</div>
+            </div>
+            <div class="text-center">
+                <div class="text-2xl font-bold text-indigo-600">520</div>
+                <div class="text-xs text-gray-500">照片</div>
+            </div>
+            <div class="text-center">
+                <div class="text-2xl font-bold text-indigo-600">18</div>
+                <div class="text-xs text-gray-500">城市</div>
+            </div>
+            <div class="text-center">
+                <div class="text-2xl font-bold text-indigo-600">5</div>
+                <div class="text-xs text-gray-500">国家</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 个人成就 -->
+    <div class="px-4 mb-6">
+        <h3 class="text-lg font-bold text-gray-800 mb-3">个人成就</h3>
+        <div class="bg-white rounded-xl p-4 shadow-sm">
+            <div class="flex overflow-x-auto pb-2 -mx-2 px-2">
+                <div class="flex-shrink-0 w-28 mr-3 text-center">
+                    <div class="w-16 h-16 mx-auto bg-indigo-100 rounded-full flex items-center justify-center mb-2">
+                        <i class="fas fa-plane text-indigo-600 text-xl"></i>
+                    </div>
+                    <div class="text-sm font-medium">环球旅行者</div>
+                    <div class="text-xs text-gray-500">5/10 国家</div>
+                </div>
+                <div class="flex-shrink-0 w-28 mr-3 text-center">
+                    <div class="w-16 h-16 mx-auto bg-amber-100 rounded-full flex items-center justify-center mb-2">
+                        <i class="fas fa-camera text-amber-600 text-xl"></i>
+                    </div>
+                    <div class="text-sm font-medium">摄影大师</div>
+                    <div class="text-xs text-gray-500">520/1000 照片</div>
+                </div>
+                <div class="flex-shrink-0 w-28 mr-3 text-center">
+                    <div class="w-16 h-16 mx-auto bg-green-100 rounded-full flex items-center justify-center mb-2">
+                        <i class="fas fa-landmark text-green-600 text-xl"></i>
+                    </div>
+                    <div class="text-sm font-medium">文化探索者</div>
+                    <div class="text-xs text-gray-500">12/50 地标</div>
+                </div>
+                <div class="flex-shrink-0 w-28 mr-3 text-center">
+                    <div class="w-16 h-16 mx-auto bg-red-100 rounded-full flex items-center justify-center mb-2">
+                        <i class="fas fa-utensils text-red-600 text-xl"></i>
+                    </div>
+                    <div class="text-sm font-medium">美食鉴赏家</div>
+                    <div class="text-xs text-gray-500">8/30 美食</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 菜单列表 -->
+    <div class="px-4 mb-24">
+        <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+            <div class="menu-item">
+                <div class="menu-icon bg-indigo-100">
+                    <i class="fas fa-bookmark text-indigo-600"></i>
+                </div>
+                <div class="flex-1">
+                    <div class="text-gray-800 font-medium">收藏夹</div>
+                    <div class="text-gray-500 text-xs">查看已收藏的记忆</div>
+                </div>
+                <i class="fas fa-chevron-right text-gray-400"></i>
+            </div>
+            <div class="menu-item">
+                <div class="menu-icon bg-green-100">
+                    <i class="fas fa-lock text-green-600"></i>
+                </div>
+                <div class="flex-1">
+                    <div class="text-gray-800 font-medium">隐私设置</div>
+                    <div class="text-gray-500 text-xs">管理你的个人信息和数据</div>
+                </div>
+                <i class="fas fa-chevron-right text-gray-400"></i>
+            </div>
+            <div class="menu-item">
+                <div class="menu-icon bg-amber-100">
+                    <i class="fas fa-cloud-upload-alt text-amber-600"></i>
+                </div>
+                <div class="flex-1">
+                    <div class="text-gray-800 font-medium">云同步</div>
+                    <div class="text-gray-500 text-xs">管理云端备份和同步</div>
+                </div>
+                <div class="flex items-center">
+                    <div class="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
+                    <span class="text-xs text-gray-500 mr-2">已同步</span>
+                    <i class="fas fa-chevron-right text-gray-400"></i>
+                </div>
+            </div>
+            <div class="menu-item">
+                <div class="menu-icon bg-red-100">
+                    <i class="fas fa-heart text-red-600"></i>
+                </div>
+                <div class="flex-1">
+                    <div class="text-gray-800 font-medium">关于我们</div>
+                    <div class="text-gray-500 text-xs">了解产品和开发团队</div>
+                </div>
+                <i class="fas fa-chevron-right text-gray-400"></i>
+            </div>
+            <div class="menu-item">
+                <div class="menu-icon bg-gray-100">
+                    <i class="fas fa-sign-out-alt text-gray-600"></i>
+                </div>
+                <div class="flex-1">
+                    <div class="text-gray-800 font-medium">退出登录</div>
+                </div>
+                <i class="fas fa-chevron-right text-gray-400"></i>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 底部导航栏 -->
+    <div class="bottom-nav">
+        <a href="home.html" class="nav-item">
+            <i class="fas fa-home"></i>
+            <span>首页</span>
+        </a>
+        <a href="timeline.html" class="nav-item">
+            <i class="fas fa-clock"></i>
+            <span>时间轴</span>
+        </a>
+        <a href="upload.html" class="nav-item">
+            <div class="w-12 h-12 rounded-full bg-indigo-600 flex items-center justify-center -mt-6">
+                <i class="fas fa-plus text-white text-xl"></i>
+            </div>
+        </a>
+        <a href="gallery.html" class="nav-item">
+            <i class="fas fa-images"></i>
+            <span>相册</span>
+        </a>
+        <a href="profile.html" class="nav-item active">
+            <i class="fas fa-user"></i>
+            <span>我的</span>
+        </a>
+    </div>
+</body>
+</html> 

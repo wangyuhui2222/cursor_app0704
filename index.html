@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>人生记录 - 数字化人生足迹</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'PingFang SC', 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f3f4f6;
+        }
+        
+        .page-card {
+            border-radius: 38px;
+            overflow: hidden;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            position: relative;
+            background-color: #111111;
+            padding: 12px;
+        }
+        
+        .page-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .page-preview {
+            width: 100%;
+            aspect-ratio: 19.5/42;
+            overflow: hidden;
+            position: relative;
+            background-color: #fff;
+            border-radius: 28px;
+        }
+        
+        .page-preview iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            transform: scale(1);
+            transform-origin: top left;
+        }
+        
+        .iphone-notch {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50%;
+            height: 30px;
+            background-color: #111111;
+            border-bottom-left-radius: 14px;
+            border-bottom-right-radius: 14px;
+            z-index: 20;
+        }
+        
+        .iphone-camera {
+            position: absolute;
+            top: 8px;
+            right: 25%;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #222222;
+            z-index: 21;
+        }
+        
+        .iphone-speaker {
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 6px;
+            border-radius: 3px;
+            background-color: #222222;
+            z-index: 21;
+        }
+        
+        .iphone-island {
+            position: absolute;
+            top: 8px;
+            left: 25%;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #222222;
+            z-index: 21;
+        }
+        
+        .iphone-buttons-left {
+            position: absolute;
+            left: -1px;
+            top: 90px;
+            width: 3px;
+            z-index: 30;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        
+        .iphone-button {
+            width: 3px;
+            height: 24px;
+            background-color: #333;
+            border-top-left-radius: 2px;
+            border-bottom-left-radius: 2px;
+        }
+        
+        .iphone-button-right {
+            position: absolute;
+            right: -1px;
+            top: 100px;
+            width: 3px;
+            height: 30px;
+            background-color: #333;
+            border-top-right-radius: 2px;
+            border-bottom-right-radius: 2px;
+            z-index: 30;
+        }
+        
+        .iphone-action-island {
+            position: absolute;
+            width: 30%;
+            height: 5px;
+            background-color: #333;
+            border-radius: 3px;
+            bottom: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 30;
+        }
+        
+        .header-wave {
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 30px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23f3f4f6' fill-opacity='1' d='M0,128L48,144C96,160,192,192,288,186.7C384,181,480,139,576,138.7C672,139,768,181,864,181.3C960,181,1056,139,1152,122.7C1248,107,1344,117,1392,122.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+        
+        .category-label {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 600;
+            margin-right: 4px;
+        }
+        
+        .label-entry {
+            background-color: #e0f2fe;
+            color: #0369a1;
+        }
+        
+        .label-core {
+            background-color: #dcfce7;
+            color: #166534;
+        }
+        
+        .label-support {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+        
+        .recommended-badge {
+            position: absolute;
+            top: 40px;
+            right: 20px;
+            background-color: #10b981;
+            color: white;
+            font-size: 10px;
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: 20px;
+            z-index: 10;
+        }
+        
+        .page-info {
+            background-color: #ffffff;
+            border-radius: 12px;
+            margin-top: 8px;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部 -->
+    <header class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-12 px-4 relative">
+        <div class="container mx-auto text-center relative z-10">
+            <h1 class="text-4xl font-bold mb-4">人生记录</h1>
+            <p class="text-xl opacity-90 mb-8">聚焦私人化、结构化、可视化、可传承的生命记录</p>
+            <p class="text-lg opacity-90">对抗时间熵增、重构生命叙事</p>
+        </div>
+        <div class="header-wave"></div>
+    </header>
+    
+    <!-- 内容区域 -->
+    <main class="container mx-auto py-8 px-4">
+        <div class="mb-8">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-800">页面导航</h2>
+                <div class="flex space-x-3">
+                    <button class="text-sm px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full" id="filter-all">全部</button>
+                    <button class="text-sm px-3 py-1 bg-white text-gray-600 rounded-full" id="filter-entry">入口页面</button>
+                    <button class="text-sm px-3 py-1 bg-white text-gray-600 rounded-full" id="filter-core">核心功能</button>
+                    <button class="text-sm px-3 py-1 bg-white text-gray-600 rounded-full" id="filter-support">辅助功能</button>
+                </div>
+            </div>
+            
+            <!-- 页面网格 -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6" id="pages-grid">
+                <!-- 欢迎页 -->
+                <div class="page-card entry-page">
+                    <div class="page-preview relative">
+                        <div class="iphone-notch"></div>
+                        <div class="iphone-camera"></div>
+                        <div class="iphone-island"></div>
+                        <div class="iphone-speaker"></div>
+                        <div class="iphone-buttons-left">
+                            <div class="iphone-button"></div>
+                            <div class="iphone-button"></div>
+                            <div class="iphone-button"></div>
+                        </div>
+                        <div class="iphone-button-right"></div>
+                        <div class="iphone-action-island"></div>
+                        <div class="recommended-badge">推荐入口</div>
+                        <iframe src="src/pages/welcome.html" loading="lazy"></iframe>
+                    </div>
+                    <div class="page-info">
+                        <div class="mb-2">
+                            <span class="category-label label-entry">入口</span>
+                        </div>
+                        <h3 class="font-bold text-gray-800 mb-1">欢迎页</h3>
+                        <p class="text-xs text-gray-500">引导页面，展示产品理念</p>
+                    </div>
+                </div>
+                
+                <!-- 授权页 -->
+                <div class="page-card entry-page">
+                    <div class="page-preview relative">
+                        <div class="iphone-notch"></div>
+                        <div class="iphone-camera"></div>
+                        <div class="iphone-island"></div>
+                        <div class="iphone-speaker"></div>
+                        <div class="iphone-buttons-left">
+                            <div class="iphone-button"></div>
+                            <div class="iphone-button"></div>
+                            <div class="iphone-button"></div>
+                        </div>
+                        <div class="iphone-button-right"></div>
+                        <div class="iphone-action-island"></div>
+                        <iframe src="src/pages/auth.html" loading="lazy"></iframe>
+                    </div>
+                    <div class="page-info">
+                        <div class="mb-2">
+                            <span class="category-label label-entry">入口</span>
+                        </div>
+                        <h3 class="font-bold text-gray-800 mb-1">授权设置</h3>
+                        <p class="text-xs text-gray-500">获取相册授权和初始化</p>
+                    </div>
+                </div>
+                
+                <!-- 登录页 -->
+                <div class="page-card entry-page">
+                    <div class="page-preview relative">
+                        <div class="iphone-notch"></div>
+                        <div class="iphone-camera"></div>
+                        <div class="iphone-island"></div>
+                        <div class="iphone-speaker"></div>
+                        <div class="iphone-buttons-left">
+                            <div class="iphone-button"></div>
+                            <div class="iphone-button"></div>
+                            <div class="iphone-button"></div>
+                        </div>
+                        <div class="iphone-button-right"></div>
+                        <div class="iphone-action-island"></div>
+                        <iframe src="src/pages/login.html" loading="lazy"></iframe>
+                    </div>
+                    <div class="page-info">
+                        <div class="mb-2">
+                            <span class="category-label label-entry">入口</span>
+                        </div>
+                        <h3 class="font-bold text-gray-800 mb-1">登录页</h3>
+                        <p class="text-xs text-gray-500">用户登录页面</p>
+                    </div>
+                </div>
+                
+                <!-- 注册页 -->
+                <div class="page-card entry-page">
+                    <div class="page-preview relative">
+                        <div class="iphone-notch"></div>
+                        <div class="iphone-camera"></div>
+                        <div class="iphone-island"></div>
+                        <div class="iphone-speaker"></div>
+                        <div class="iphone-buttons-left">
+                            <div class="iphone-button"></div>
+                            <div class="iphone-button"></div>
+                            <div class="iphone-button"></div>
+                        </div>
+                        <div class="iphone-button-right"></div>
+                        <div class="iphone-action-island"></div>
+                        <iframe src="src/pages/signup.html" loading="lazy"></iframe>
+                    </div>
+                    <div class="page-info">
+                        <div class="mb-2">
+                            <span class="category-label label-entry">入口</span>
+                        </div>
+                        <h3 class="font-bold text-gray-800 mb-1">注册页</h3>
+                        <p class="text-xs text-gray-500">新用户注册页面</p>
+                    </div>
+                </div>
+                
+                <!-- 首页 -->
+                <div class="page-card core-page">
+                    <div class="page-preview relative">
+                        <div class="iphone-notch"></div>
+                        <div class="iphone-camera"></div>
+                        <div class="iphone-island"></div>
+                        <div class="iphone-speaker"></div>
+                        <div class="iphone-buttons-left">
+                            <div class="iphone-button"></div>
+                            <div class="iphone-button"></div>
+                            <div class="iphone-button"></div>
+                        </div>
+                        <div class="iphone-button-right"></div>
+                        <div class="iphone-action-island"></div>
+                        <iframe src="src/pages/home.html" loading="lazy"></iframe>
+                    </div>
+                    <div class="page-info">
+                        <div class="mb-2">
+                            <span class="category-label label-core">核心</span>
+                        </div>
+                        <h3 class="font-bold text-gray-800 mb-1">首页</h3>
+                        <p class="text-xs text-gray-500">主页面，展示AI分析和概览</p>
+                    </div>
+                </div>
+                
+                <!-- 分类页 -->
+                <div class="page-card core-page">
+                    <div class="page-preview relative">
+                        <div class="iphone-notch"></div>
+                        <div class="iphone-camera"></div>
+                        <div class="iphone-island"></div>
+                        <div class="iphone-speaker"></div>
+                        <div class="iphone-buttons-left">
+                            <div class="iphone-button"></div>
+                            <div class="iphone-button"></div>
+                            <div class="iphone-button"></div>
+                        </div>
+                        <div class="iphone-button-right"></div>
+                        <div class="iphone-action-island"></div>
+                        <iframe src="src/pages/category.html" loading="lazy"></iframe>
+                    </div>
+                    <div class="page-info">
+                        <div class="mb-2">
+                            <span class="category-label label-core">核心</span>
+                        </div>
+                        <h3 class="font-bold text-gray-800 mb-1">分类页</h3>
+                        <p class="text-xs text-gray-500">生活分类相册展示</p>
+                    </div>
+                </div>
+                
+                <!-- 时间线 -->
+                <div class="page-card core-page">
+                    <div class="page-preview relative">
+                        <div class="iphone-notch"></div>
+                        <div class="iphone-camera"></div>
+                        <div class="iphone-island"></div>
+                        <div class="iphone-speaker"></div>
+                        <div class="iphone-buttons-left">
+                            <div class="iphone-button"></div>
+                            <div class="iphone-button"></div>
+                            <div class="iphone-button"></div>
+                        </div>
+                        <div class="iphone-button-right"></div>
+                        <div class="iphone-action-island"></div>
+                        <iframe src="src/pages/timeline.html" loading="lazy"></iframe>
+                    </div>
+                    <div class="page-info">
+                        <div class="mb-2">
+                            <span class="category-label label-core">核心</span>
+                        </div>
+                        <h3 class="font-bold text-gray-800 mb-1">时间线</h3>
+                        <p class="text-xs text-gray-500">按时间轴展示记录</p>
+                    </div>
+                </div>
+                
+                <!-- 地图 -->
+                <div class="page-card core-page">
+                    <div class="page-preview relative">
+                        <div class="iphone-notch"></div>
+                        <div class="iphone-camera"></div>
+                        <div class="iphone-island"></div>
+                        <div class="iphone-speaker"></div>
+                        <div class="iphone-buttons-left">
+                            <div class="iphone-button"></div>
+                            <div class="iphone-button"></div>
+                            <div class="iphone-button"></div>
+                        </div>
+                        <div class="iphone-button-right"></div>
+                        <div class="iphone-action-island"></div>
+                        <iframe src="src/pages/map.html" loading="lazy"></iframe>
+                    </div>
+                    <div class="page-info">
+                        <div class="mb-2">
+                            <span class="category-label label-core">核心</span>
+                        </div>
+                        <h3 class="font-bold text-gray-800 mb-1">地图</h3>
+                        <p class="text-xs text-gray-500">足迹地图展示</p>
+                    </div>
+                </div>
+                
+                <!-- 旅游 -->
+                <div class="page-card core-page">
+                    <div class="page-preview relative">
+                        <div class="iphone-notch"></div>
+                        <div class="iphone-camera"></div>
+                        <div class="iphone-island"></div>
+                        <div class="iphone-speaker"></div>
+                        <div class="iphone-buttons-left">
+                            <div class="iphone-button"></div>
+                            <div class="iphone-button"></div>
+                            <div class="iphone-button"></div>
+                        </div>
+                        <div class="iphone-button-right"></div>
+                        <div class="iphone-action-island"></div>
+                        <iframe src="src/pages/travel.html" loading="lazy"></iframe>
+                    </div>
+                    <div class="page-info">
+                        <div class="mb-2">
+                            <span class="category-label label-core">核心</span>
+                        </div>
+                        <h3 class="font-bold text-gray-800 mb-1">旅游</h3>
+                        <p class="text-xs text-gray-500">旅游记录与足迹可视化</p>
+                    </div>
+                </div>
+                
+                <!-- 学业 -->
+                <div class="page-card core-page">
+                    <div class="page-preview relative">
+                        <div class="iphone-notch"></div>
+                        <div class="iphone-camera"></div>
+                        <div class="iphone-island"></div>
+                        <div class="iphone-speaker"></div>
+                        <div class="iphone-buttons-left">
+                            <div class="iphone-button"></div>
+                            <div class="iphone-button"></div>
+                            <div class="iphone-button"></div>
+                        </div>
+                        <div class="iphone-button-right"></div>
+                        <div class="iphone-action-island"></div>
+                        <iframe src="src/pages/study.html" loading="lazy"></iframe>
+                    </div>
+                    <div class="page-info">
+                        <div class="mb-2">
+                            <span class="category-label label-core">核心</span>
+                        </div>
+                        <h3 class="font-bold text-gray-800 mb-1">学业</h3>
+                        <p class="text-xs text-gray-500">学业生涯记录与成就</p>
+                    </div>
+                </div>
+                
+                <!-- 相册 -->
+                <div class="page-card core-page">
+                    <div class="page-preview relative">
+                        <div class="iphone-notch"></div>
+                        <div class="iphone-camera"></div>
+                        <div class="iphone-island"></div>
+                        <div class="iphone-speaker"></div>
+                        <div class="iphone-buttons-left">
+                            <div class="iphone-button"></div>
+                            <div class="iphone-button"></div>
+                            <div class="iphone-button"></div>
+                        </div>
+                        <div class="iphone-button-right"></div>
+                        <div class="iphone-action-island"></div>
+                        <iframe src="src/pages/gallery.html" loading="lazy"></iframe>
+                    </div>
+                    <div class="page-info">
+                        <div class="mb-2">
+                            <span class="category-label label-core">核心</span>
+                        </div>
+                        <h3 class="font-bold text-gray-800 mb-1">相册</h3>
+                        <p class="text-xs text-gray-500">照片浏览和管理</p>
+                    </div>
+                </div>
+                
+                <!-- 统计 -->
+                <div class="page-card core-page">
+                    <div class="page-preview relative">
+                        <div class="iphone-notch"></div>
+                        <div class="iphone-camera"></div>
+                        <div class="iphone-island"></div>
+                        <div class="iphone-speaker"></div>
+                        <div class="iphone-buttons-left">
+                            <div class="iphone-button"></div>
+                            <div class="iphone-button"></div>
+                            <div class="iphone-button"></div>
+                        </div>
+                        <div class="iphone-button-right"></div>
+                        <div class="iphone-action-island"></div>
+                        <iframe src="src/pages/stats.html" loading="lazy"></iframe>
+                    </div>
+                    <div class="page-info">
+                        <div class="mb-2">
+                            <span class="category-label label-core">核心</span>
+                        </div>
+                        <h3 class="font-bold text-gray-800 mb-1">统计</h3>
+                        <p class="text-xs text-gray-500">数据统计和可视化</p>
+                    </div>
+                </div>
+                
+                <!-- 事件详情 -->
+                <div class="page-card core-page">
+                    <div class="page-preview relative">
+                        <div class="iphone-notch"></div>
+                        <div class="iphone-camera"></div>
+                        <div class="iphone-island"></div>
+                        <div class="iphone-speaker"></div>
+                        <div class="iphone-buttons-left">
+                            <div class="iphone-button"></div>
+                            <div class="iphone-button"></div>
+                            <div class="iphone-button"></div>
+                        </div>
+                        <div class="iphone-button-right"></div>
+                        <div class="iphone-action-island"></div>
+                        <iframe src="src/pages/event_detail.html" loading="lazy"></iframe>
+                    </div>
+                    <div class="page-info">
+                        <div class="mb-2">
+                            <span class="category-label label-core">核心</span>
+                        </div>
+                        <h3 class="font-bold text-gray-800 mb-1">事件详情</h3>
+                        <p class="text-xs text-gray-500">事件的详细信息</p>
+                    </div>
+                </div>
+                
+                <!-- 上传 -->
+                <div class="page-card support-page">
+                    <div class="page-preview relative">
+                        <div class="iphone-notch"></div>
+                        <div class="iphone-camera"></div>
+                        <div class="iphone-island"></div>
+                        <div class="iphone-speaker"></div>
+                        <div class="iphone-buttons-left">
+                            <div class="iphone-button"></div>
+                            <div class="iphone-button"></div>
+                            <div class="iphone-button"></div>
+                        </div>
+                        <div class="iphone-button-right"></div>
+                        <div class="iphone-action-island"></div>
+                        <iframe src="src/pages/upload.html" loading="lazy"></iframe>
+                    </div>
+                    <div class="page-info">
+                        <div class="mb-2">
+                            <span class="category-label label-support">辅助</span>
+                        </div>
+                        <h3 class="font-bold text-gray-800 mb-1">上传</h3>
+                        <p class="text-xs text-gray-500">照片、视频和音频上传</p>
+                    </div>
+                </div>
+                
+                <!-- 个人资料 -->
+                <div class="page-card support-page">
+                    <div class="page-preview relative">
+                        <div class="iphone-notch"></div>
+                        <div class="iphone-camera"></div>
+                        <div class="iphone-island"></div>
+                        <div class="iphone-speaker"></div>
+                        <div class="iphone-buttons-left">
+                            <div class="iphone-button"></div>
+                            <div class="iphone-button"></div>
+                            <div class="iphone-button"></div>
+                        </div>
+                        <div class="iphone-button-right"></div>
+                        <div class="iphone-action-island"></div>
+                        <iframe src="src/pages/profile.html" loading="lazy"></iframe>
+                    </div>
+                    <div class="page-info">
+                        <div class="mb-2">
+                            <span class="category-label label-support">辅助</span>
+                        </div>
+                        <h3 class="font-bold text-gray-800 mb-1">个人资料</h3>
+                        <p class="text-xs text-gray-500">用户个人信息</p>
+                    </div>
+                </div>
+                
+                <!-- 设置 -->
+                <div class="page-card support-page">
+                    <div class="page-preview relative">
+                        <div class="iphone-notch"></div>
+                        <div class="iphone-camera"></div>
+                        <div class="iphone-island"></div>
+                        <div class="iphone-speaker"></div>
+                        <div class="iphone-buttons-left">
+                            <div class="iphone-button"></div>
+                            <div class="iphone-button"></div>
+                            <div class="iphone-button"></div>
+                        </div>
+                        <div class="iphone-button-right"></div>
+                        <div class="iphone-action-island"></div>
+                        <iframe src="src/pages/settings.html" loading="lazy"></iframe>
+                    </div>
+                    <div class="page-info">
+                        <div class="mb-2">
+                            <span class="category-label label-support">辅助</span>
+                        </div>
+                        <h3 class="font-bold text-gray-800 mb-1">设置</h3>
+                        <p class="text-xs text-gray-500">应用设置和偏好</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- 底部 -->
+    <footer class="bg-gray-800 text-white py-8 px-4">
+        <div class="container mx-auto text-center">
+            <h2 class="text-2xl font-bold mb-4">人生记录</h2>
+            <p class="mb-6">聚焦私人化、结构化、可视化、可传承的生命记录</p>
+            <div class="text-sm text-gray-400">
+                <p>高保真原型展示</p>
+                <p class="mt-2">© 2023 人生记录应用. 版权所有.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // 过滤器功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterAll = document.getElementById('filter-all');
+            const filterEntry = document.getElementById('filter-entry');
+            const filterCore = document.getElementById('filter-core');
+            const filterSupport = document.getElementById('filter-support');
+            
+            const entryPages = document.querySelectorAll('.entry-page');
+            const corePages = document.querySelectorAll('.core-page');
+            const supportPages = document.querySelectorAll('.support-page');
+            const allPages = document.querySelectorAll('.page-card');
+            
+            filterAll.addEventListener('click', function() {
+                setActiveFilter(filterAll);
+                showPages(allPages);
+            });
+            
+            filterEntry.addEventListener('click', function() {
+                setActiveFilter(filterEntry);
+                hideAllPages();
+                showPages(entryPages);
+            });
+            
+            filterCore.addEventListener('click', function() {
+                setActiveFilter(filterCore);
+                hideAllPages();
+                showPages(corePages);
+            });
+            
+            filterSupport.addEventListener('click', function() {
+                setActiveFilter(filterSupport);
+                hideAllPages();
+                showPages(supportPages);
+            });
+            
+            function setActiveFilter(activeButton) {
+                [filterAll, filterEntry, filterCore, filterSupport].forEach(btn => {
+                    btn.classList.remove('bg-indigo-100', 'text-indigo-700');
+                    btn.classList.add('bg-white', 'text-gray-600');
+                });
+                
+                activeButton.classList.remove('bg-white', 'text-gray-600');
+                activeButton.classList.add('bg-indigo-100', 'text-indigo-700');
+            }
+            
+            function hideAllPages() {
+                allPages.forEach(page => {
+                    page.style.display = 'none';
+                });
+            }
+            
+            function showPages(pages) {
+                pages.forEach(page => {
+                    page.style.display = 'block';
+                });
+            }
+        });
+    </script>
+</body>
+</html> 

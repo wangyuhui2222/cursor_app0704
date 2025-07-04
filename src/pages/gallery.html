@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>相册 - 人生记录</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <style>
+        .photo-item {
+            position: relative;
+            overflow: hidden;
+            padding-bottom: 100%;
+        }
+        
+        .photo-item img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .media-type-indicator {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background-color: rgba(0,0,0,0.5);
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+        
+        .selection-indicator {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 2px solid white;
+            background-color: rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .selection-indicator.selected {
+            background-color: #6366f1;
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- 状态栏 -->
+    <div class="status-bar">
+        <div>9:41</div>
+        <div>
+            <i class="fas fa-signal"></i>
+            <i class="fas fa-wifi ml-1"></i>
+            <i class="fas fa-battery-full ml-1"></i>
+        </div>
+    </div>
+    
+    <!-- 页面头部 -->
+    <div class="page-header">
+        <div class="flex items-center">
+            <h1 class="text-xl font-bold">相册</h1>
+        </div>
+        <div class="flex items-center">
+            <button class="p-2">
+                <i class="fas fa-search text-gray-600"></i>
+            </button>
+            <button class="p-2">
+                <i class="fas fa-ellipsis-v text-gray-600"></i>
+            </button>
+        </div>
+    </div>
+    
+    <!-- 主页内容区域 -->
+    <div class="page-content pb-24">
+        <!-- 筛选选项 -->
+        <div class="flex overflow-x-auto mb-6 pb-2 -mx-4 px-4">
+            <button class="flex-shrink-0 bg-indigo-600 text-white px-4 py-2 rounded-full text-sm mr-2">
+                全部媒体
+            </button>
+            <button class="flex-shrink-0 bg-white text-gray-700 px-4 py-2 rounded-full text-sm mr-2 shadow-sm">
+                <i class="fas fa-image mr-1 text-indigo-600"></i>照片
+            </button>
+            <button class="flex-shrink-0 bg-white text-gray-700 px-4 py-2 rounded-full text-sm mr-2 shadow-sm">
+                <i class="fas fa-video mr-1 text-red-600"></i>视频
+            </button>
+            <button class="flex-shrink-0 bg-white text-gray-700 px-4 py-2 rounded-full text-sm mr-2 shadow-sm">
+                <i class="fas fa-heart mr-1 text-pink-600"></i>收藏
+            </button>
+        </div>
+        
+        <!-- 时间分组 -->
+        <div class="mb-6">
+            <h2 class="text-sm font-medium text-gray-700 mb-2">2023年6月</h2>
+            <div class="grid grid-cols-3 gap-1">
+                <!-- 照片项 -->
+                <div class="photo-item rounded-lg overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1527631746610-bca00a040d60?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=60" alt="毕业照片">
+                    <div class="media-type-indicator">
+                        <i class="fas fa-image"></i>
+                    </div>
+                </div>
+                <div class="photo-item rounded-lg overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=60" alt="毕业照片">
+                </div>
+                <div class="photo-item rounded-lg overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=60" alt="毕业照片">
+                </div>
+                <div class="photo-item rounded-lg overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=60" alt="毕业照片">
+                    <div class="media-type-indicator">
+                        <i class="fas fa-video"></i>
+                    </div>
+                </div>
+                <div class="photo-item rounded-lg overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1495216875107-c6c043eb703f?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=60" alt="毕业照片">
+                </div>
+                <div class="photo-item rounded-lg overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1606761568499-6d2451b23c66?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=60" alt="毕业照片">
+                </div>
+            </div>
+        </div>
+        
+        <div class="mb-6">
+            <h2 class="text-sm font-medium text-gray-700 mb-2">2023年5月</h2>
+            <div class="grid grid-cols-3 gap-1">
+                <!-- 照片项 -->
+                <div class="photo-item rounded-lg overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1527786356703-4b100091cd2c?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=60" alt="东京旅行">
+                </div>
+                <div class="photo-item rounded-lg overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=60" alt="东京旅行">
+                    <div class="media-type-indicator">
+                        <i class="fas fa-video"></i>
+                    </div>
+                </div>
+                <div class="photo-item rounded-lg overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1504109586057-7a2ae83d1338?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=60" alt="东京旅行">
+                </div>
+                <div class="photo-item rounded-lg overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1536098561742-ca998e48cbcc?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=60" alt="东京旅行">
+                </div>
+                <div class="photo-item rounded-lg overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1526481280693-3bfa7568e0f3?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=60" alt="东京旅行">
+                </div>
+                <div class="photo-item rounded-lg overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1503899036084-c55cdd92da26?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=60" alt="东京旅行">
+                </div>
+                <div class="photo-item rounded-lg overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=60" alt="东京旅行">
+                </div>
+                <div class="photo-item rounded-lg overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1542640244-7e672d6cef4e?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=60" alt="东京旅行">
+                </div>
+                <div class="photo-item rounded-lg overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1542931415-162aeab4418f?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=60" alt="东京旅行">
+                </div>
+            </div>
+        </div>
+        
+        <div class="mb-6">
+            <h2 class="text-sm font-medium text-gray-700 mb-2">2023年1月</h2>
+            <div class="grid grid-cols-3 gap-1">
+                <!-- 照片项 -->
+                <div class="photo-item rounded-lg overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=60" alt="荣誉证书">
+                    <div class="selection-indicator selected">
+                        <i class="fas fa-check text-xs"></i>
+                    </div>
+                </div>
+                <div class="photo-item rounded-lg overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1557425955-df376b5903c8?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=60" alt="荣誉证书">
+                    <div class="selection-indicator"></div>
+                </div>
+                <div class="photo-item rounded-lg overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1544928147-79a2dbc1f389?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=60" alt="荣誉证书">
+                    <div class="selection-indicator"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 加载更多 -->
+        <div class="text-center py-4">
+            <button class="bg-white text-indigo-600 border border-indigo-600 px-4 py-2 rounded-full text-sm font-medium">
+                加载更多照片
+            </button>
+        </div>
+    </div>
+    
+    <!-- 底部工具栏 -->
+    <div class="fixed bottom-0 left-0 right-0 bg-white py-3 px-4 flex justify-between items-center border-t border-gray-200">
+        <div class="text-sm font-medium">已选择 1 项</div>
+        <div class="flex space-x-4">
+            <button class="text-gray-600">
+                <i class="fas fa-share-alt text-lg"></i>
+            </button>
+            <button class="text-gray-600">
+                <i class="fas fa-trash-alt text-lg"></i>
+            </button>
+            <button class="text-gray-600">
+                <i class="fas fa-tag text-lg"></i>
+            </button>
+            <button class="text-gray-600">
+                <i class="fas fa-ellipsis-h text-lg"></i>
+            </button>
+        </div>
+    </div>
+    
+    <!-- 底部导航栏 -->
+    <div class="bottom-nav">
+        <a href="home.html" class="nav-item">
+            <i class="fas fa-home"></i>
+            <span>首页</span>
+        </a>
+        <a href="timeline.html" class="nav-item">
+            <i class="fas fa-clock"></i>
+            <span>时间轴</span>
+        </a>
+        <a href="upload.html" class="nav-item">
+            <div class="w-12 h-12 rounded-full bg-indigo-600 flex items-center justify-center -mt-6">
+                <i class="fas fa-plus text-white text-xl"></i>
+            </div>
+        </a>
+        <a href="gallery.html" class="nav-item active">
+            <i class="fas fa-images"></i>
+            <span>相册</span>
+        </a>
+        <a href="profile.html" class="nav-item">
+            <i class="fas fa-user"></i>
+            <span>我的</span>
+        </a>
+    </div>
+</body>
+</html> 

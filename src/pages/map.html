@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>地图足迹 - 人生记录</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <style>
+        .map-container {
+            position: relative;
+            height: calc(100vh - 130px);
+            z-index: 1;
+        }
+        
+        .location-marker {
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            background-color: rgba(99, 102, 241, 0.8);
+            border-radius: 50%;
+            border: 2px solid white;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .location-marker:hover, .location-marker.active {
+            background-color: rgb(99, 102, 241);
+            transform: translate(-50%, -50%) scale(1.2);
+        }
+        
+        .location-marker::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(99, 102, 241, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: translate(-50%, -50%) scale(0.5);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1.5);
+                opacity: 0;
+            }
+        }
+        
+        .location-popup {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            border-radius: 20px 20px 0 0;
+            padding: 20px;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            transform: translateY(100%);
+            transition: transform 0.3s ease-out;
+            z-index: 10;
+        }
+        
+        .location-popup.active {
+            transform: translateY(0);
+        }
+        
+        .drag-handle {
+            width: 40px;
+            height: 5px;
+            background-color: #cbd5e0;
+            border-radius: 3px;
+            margin: 0 auto 15px;
+        }
+        
+        .map-controls {
+            position: absolute;
+            right: 16px;
+            bottom: 100px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 5;
+        }
+        
+        .map-control-btn {
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- 状态栏 -->
+    <div class="status-bar">
+        <div>9:41</div>
+        <div>
+            <i class="fas fa-signal"></i>
+            <i class="fas fa-wifi ml-1"></i>
+            <i class="fas fa-battery-full ml-1"></i>
+        </div>
+    </div>
+    
+    <!-- 页面头部 -->
+    <div class="page-header">
+        <div class="flex items-center">
+            <h1 class="text-xl font-bold">足迹地图</h1>
+        </div>
+        <div class="flex items-center">
+            <button class="p-2">
+                <i class="fas fa-list text-gray-600"></i>
+            </button>
+            <button class="p-2">
+                <i class="fas fa-filter text-gray-600"></i>
+            </button>
+        </div>
+    </div>
+    
+    <!-- 主页内容区域 -->
+    <div class="pb-24 relative">
+        <!-- 地图容器 -->
+        <div class="map-container">
+            <!-- 这里使用一张背景图模拟地图 -->
+            <img src="https://images.unsplash.com/photo-1526778548025-fa2f459cd5ce?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="世界地图" class="w-full h-full object-cover">
+            
+            <!-- 地图标记点 -->
+            <div class="location-marker" style="top: 30%; left: 25%;" data-location="东京" data-country="日本" data-visits="1" data-date="2023.05.03"></div>
+            <div class="location-marker" style="top: 35%; left: 45%;" data-location="北京" data-country="中国" data-visits="12" data-date="2023.06.18"></div>
+            <div class="location-marker" style="top: 40%; left: 20%;" data-location="巴黎" data-country="法国" data-visits="1" data-date="2022.08.15"></div>
+            <div class="location-marker" style="top: 32%; left: 18%;" data-location="伦敦" data-country="英国" data-visits="2" data-date="2022.08.10"></div>
+            <div class="location-marker" style="top: 38%; left: 15%;" data-location="马德里" data-country="西班牙" data-visits="1" data-date="2022.08.20"></div>
+            <div class="location-marker" style="top: 45%; left: 48%;" data-location="上海" data-country="中国" data-visits="8" data-date="2023.01.05"></div>
+            <div class="location-marker" style="top: 45%; left: 44%;" data-location="杭州" data-country="中国" data-visits="5" data-date="2023.06.28"></div>
+            <div class="location-marker active" style="top: 47%; left: 42%;" data-location="重庆" data-country="中国" data-visits="3" data-date="2021.10.01"></div>
+            <div class="location-marker" style="top: 30%; left: 10%;" data-location="纽约" data-country="美国" data-visits="2" data-date="2020.12.15"></div>
+        </div>
+        
+        <!-- 地图控制按钮 -->
+        <div class="map-controls">
+            <button class="map-control-btn">
+                <i class="fas fa-plus text-gray-600"></i>
+            </button>
+            <button class="map-control-btn">
+                <i class="fas fa-minus text-gray-600"></i>
+            </button>
+            <button class="map-control-btn">
+                <i class="fas fa-location-arrow text-gray-600"></i>
+            </button>
+        </div>
+        
+        <!-- 足迹统计 -->
+        <div class="absolute top-4 left-4 bg-white rounded-xl p-3 shadow-md z-5">
+            <div class="text-xs text-gray-500 mb-1">你的足迹覆盖</div>
+            <div class="grid grid-cols-3 gap-3">
+                <div class="text-center">
+                    <div class="text-lg font-bold text-indigo-600">5</div>
+                    <div class="text-xs text-gray-500">国家</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-lg font-bold text-indigo-600">18</div>
+                    <div class="text-xs text-gray-500">城市</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-lg font-bold text-indigo-600">42</div>
+                    <div class="text-xs text-gray-500">地点</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 位置详情弹窗 -->
+        <div class="location-popup active">
+            <div class="drag-handle"></div>
+            <div class="flex items-start mb-4">
+                <div class="flex-1">
+                    <h3 class="text-lg font-bold text-gray-800">重庆</h3>
+                    <p class="text-sm text-gray-500">中国</p>
+                </div>
+                <div class="text-right">
+                    <span class="text-xs text-gray-500">最近访问: 2021.10.01</span>
+                    <div class="text-xs bg-indigo-100 text-indigo-600 px-2 py-1 rounded-full inline-block mt-1">
+                        <i class="fas fa-clock mr-1"></i>去过 3 次
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 地点相关照片 -->
+            <div class="mb-4">
+                <h4 class="text-sm font-medium text-gray-700 mb-2">相关照片</h4>
+                <div class="grid grid-cols-3 gap-2">
+                    <a href="#" class="block h-24 rounded-lg overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1522623349500-de37a56ea2a5?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80" alt="重庆照片" class="w-full h-full object-cover">
+                    </a>
+                    <a href="#" class="block h-24 rounded-lg overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1574923134630-28b8442875c5?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80" alt="重庆照片" class="w-full h-full object-cover">
+                    </a>
+                    <a href="#" class="block h-24 rounded-lg overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1574425431390-52b5e85623c9?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80" alt="重庆照片" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center text-white font-bold">
+                            +12
+                        </div>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- 地点相关事件 -->
+            <div>
+                <h4 class="text-sm font-medium text-gray-700 mb-2">相关事件</h4>
+                <div class="space-y-3">
+                    <a href="event_detail.html" class="block bg-gray-50 rounded-xl p-3">
+                        <div class="flex justify-between items-center mb-1">
+                            <h5 class="font-medium text-gray-800">国庆重庆之旅</h5>
+                            <span class="text-xs text-gray-500">2021.10.01</span>
+                        </div>
+                        <p class="text-xs text-gray-600 line-clamp-1">国庆假期和朋友一起去重庆游玩，打卡了洪崖洞、解放碑等著名景点...</p>
+                    </a>
+                    <a href="event_detail.html" class="block bg-gray-50 rounded-xl p-3">
+                        <div class="flex justify-between items-center mb-1">
+                            <h5 class="font-medium text-gray-800">重庆商务出差</h5>
+                            <span class="text-xs text-gray-500">2020.07.15</span>
+                        </div>
+                        <p class="text-xs text-gray-600 line-clamp-1">公司派我去重庆出差，与当地合作伙伴进行业务洽谈...</p>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- 操作按钮 -->
+            <div class="mt-4 flex space-x-2">
+                <button class="flex-1 bg-indigo-600 text-white rounded-xl py-3 text-sm font-medium">
+                    <i class="fas fa-plus mr-1"></i>添加新事件
+                </button>
+                <button class="w-12 bg-gray-100 text-gray-600 rounded-xl flex items-center justify-center">
+                    <i class="fas fa-share-alt"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 底部导航栏 -->
+    <div class="bottom-nav">
+        <a href="home.html" class="nav-item">
+            <i class="fas fa-home"></i>
+            <span>首页</span>
+        </a>
+        <a href="timeline.html" class="nav-item">
+            <i class="fas fa-clock"></i>
+            <span>时间轴</span>
+        </a>
+        <a href="upload.html" class="nav-item">
+            <div class="w-12 h-12 rounded-full bg-indigo-600 flex items-center justify-center -mt-6">
+                <i class="fas fa-plus text-white text-xl"></i>
+            </div>
+        </a>
+        <a href="gallery.html" class="nav-item">
+            <i class="fas fa-images"></i>
+            <span>相册</span>
+        </a>
+        <a href="profile.html" class="nav-item">
+            <i class="fas fa-user"></i>
+            <span>我的</span>
+        </a>
+    </div>
+</body>
+</html> 

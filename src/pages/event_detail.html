@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>事件详情 - 人生记录</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <style>
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 4px;
+            height: 250px;
+        }
+        
+        .media-item {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .media-item img, .media-item video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .media-item:first-child {
+            grid-column: span 4;
+            grid-row: span 2;
+        }
+        
+        .media-item:nth-child(2) {
+            grid-column: span 2;
+        }
+        
+        .media-item:nth-child(3) {
+            grid-column: span 2;
+        }
+        
+        .media-more {
+            position: absolute;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 24px;
+        }
+        
+        .media-type-indicator {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background-color: rgba(0,0,0,0.5);
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+        
+        .header-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.5), transparent);
+            z-index: 10;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- 状态栏 -->
+    <div class="status-bar text-white">
+        <div>9:41</div>
+        <div>
+            <i class="fas fa-signal"></i>
+            <i class="fas fa-wifi ml-1"></i>
+            <i class="fas fa-battery-full ml-1"></i>
+        </div>
+    </div>
+    
+    <!-- 媒体展示区 -->
+    <div class="relative">
+        <div class="header-overlay">
+            <div class="flex justify-between items-center h-full px-4">
+                <button class="text-white" onclick="history.back()">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <div class="flex items-center">
+                    <button class="text-white mr-4">
+                        <i class="fas fa-heart"></i>
+                    </button>
+                    <button class="text-white">
+                        <i class="fas fa-share-alt"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="media-grid">
+            <div class="media-item">
+                <img src="https://images.unsplash.com/photo-1527631746610-bca00a040d60?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60" alt="毕业典礼">
+            </div>
+            <div class="media-item">
+                <img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=60" alt="毕业典礼">
+            </div>
+            <div class="media-item">
+                <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=60" alt="毕业典礼">
+                <div class="media-more">+9</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 内容区域 -->
+    <div class="px-4 py-5">
+        <div class="flex justify-between items-start mb-4">
+            <div>
+                <h1 class="text-2xl font-bold text-gray-800">大学毕业典礼</h1>
+                <div class="flex items-center text-sm text-gray-600 mt-1">
+                    <i class="fas fa-map-marker-alt mr-1"></i>
+                    <span>北京大学</span>
+                    <span class="mx-2">·</span>
+                    <span>2023.06.18</span>
+                </div>
+            </div>
+            <div class="bg-indigo-600 text-white px-3 py-1 rounded-full text-xs flex items-center">
+                <i class="fas fa-graduation-cap mr-1"></i>教育
+            </div>
+        </div>
+        
+        <div class="mb-6">
+            <p class="text-gray-700 leading-relaxed">
+                这是我人生中重要的一天，四年大学生活画上了圆满的句号。早上9点，我穿上了学士服，戴上了学士帽，和同学们一起参加了毕业典礼。校长的致辞非常鼓舞人心，让我对未来充满了期待。
+            </p>
+            <p class="text-gray-700 leading-relaxed mt-3">
+                典礼结束后，我们在校园里拍了很多照片，留下了美好的回忆。和朋友们一起在食堂吃了最后一顿饭，互相留下了联系方式，约定未来要经常聚会。
+            </p>
+            <p class="text-gray-700 leading-relaxed mt-3">
+                虽然有些不舍，但我知道这只是人生的一个新起点。大学四年学到的知识和结交的朋友将会伴随我一生，而未来还有更多的精彩等待着我去探索。
+            </p>
+        </div>
+        
+        <!-- 照片统计 -->
+        <div class="flex items-center justify-between bg-gray-50 rounded-xl p-3 mb-6">
+            <div class="flex items-center">
+                <i class="fas fa-image text-indigo-600 mr-2"></i>
+                <span class="text-sm font-medium">12 张照片</span>
+            </div>
+            <button class="text-indigo-600 text-sm font-medium">
+                查看全部
+            </button>
+        </div>
+        
+        <!-- 标签 -->
+        <div class="mb-6">
+            <h3 class="text-sm font-medium text-gray-700 mb-2">标签</h3>
+            <div class="flex flex-wrap gap-2">
+                <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">毕业</span>
+                <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">大学</span>
+                <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">北京</span>
+                <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">纪念</span>
+                <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">2023</span>
+            </div>
+        </div>
+        
+        <!-- 位置 -->
+        <div class="mb-6">
+            <h3 class="text-sm font-medium text-gray-700 mb-2">位置</h3>
+            <div class="bg-gray-100 rounded-xl overflow-hidden h-40 relative">
+                <img src="https://images.unsplash.com/photo-1622787345504-3b483f0c3ca4?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60" alt="地图" class="w-full h-full object-cover">
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <span class="bg-white px-4 py-2 rounded-full text-sm font-medium text-indigo-600 shadow-md">
+                        <i class="fas fa-map-marker-alt mr-1"></i>在地图上查看
+                    </span>
+                </div>
+                <!-- 标记点 -->
+                <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-red-500 rounded-full border-2 border-white"></div>
+            </div>
+        </div>
+        
+        <!-- 情感分析 -->
+        <div class="mb-6">
+            <h3 class="text-sm font-medium text-gray-700 mb-2">情感分析</h3>
+            <div class="bg-white rounded-xl p-4 border border-gray-100 shadow-sm">
+                <div class="flex justify-between items-center mb-3">
+                    <div class="flex items-center">
+                        <div class="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center mr-2">
+                            <i class="fas fa-smile text-indigo-600"></i>
+                        </div>
+                        <div>
+                            <div class="text-sm font-medium">积极情绪</div>
+                            <div class="text-xs text-gray-500">本次事件的整体情感倾向</div>
+                        </div>
+                    </div>
+                    <div class="text-xl font-bold text-indigo-600">90%</div>
+                </div>
+                <div class="h-2 bg-gray-100 rounded-full overflow-hidden mb-2">
+                    <div class="h-full bg-indigo-600 rounded-full" style="width: 90%"></div>
+                </div>
+                <div class="flex justify-between text-xs text-gray-500">
+                    <span>消极</span>
+                    <span>中性</span>
+                    <span>积极</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 相关事件 -->
+        <div>
+            <h3 class="text-sm font-medium text-gray-700 mb-2">相关事件</h3>
+            <div class="space-y-3">
+                <a href="#" class="flex items-center bg-white rounded-xl p-3 border border-gray-100 shadow-sm">
+                    <div class="w-12 h-12 rounded-lg overflow-hidden mr-3">
+                        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=60" alt="入职" class="w-full h-full object-cover">
+                    </div>
+                    <div class="flex-1">
+                        <div class="font-medium text-gray-800">入职科技公司</div>
+                        <div class="text-xs text-gray-500">2022.07.05 · 北京</div>
+                    </div>
+                    <i class="fas fa-chevron-right text-gray-400"></i>
+                </a>
+                <a href="#" class="flex items-center bg-white rounded-xl p-3 border border-gray-100 shadow-sm">
+                    <div class="w-12 h-12 rounded-lg overflow-hidden mr-3">
+                        <img src="https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=60" alt="聚会" class="w-full h-full object-cover">
+                    </div>
+                    <div class="flex-1">
+                        <div class="font-medium text-gray-800">毕业生聚会</div>
+                        <div class="text-xs text-gray-500">2023.07.10 · 北京</div>
+                    </div>
+                    <i class="fas fa-chevron-right text-gray-400"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 底部工具栏 -->
+    <div class="fixed bottom-0 left-0 right-0 bg-white py-4 px-4 flex justify-between items-center border-t border-gray-200">
+        <button class="flex items-center justify-center w-12 h-12 rounded-full bg-gray-100 text-gray-600">
+            <i class="fas fa-pen"></i>
+        </button>
+        <button class="flex-1 bg-indigo-600 text-white rounded-xl py-3 text-sm font-medium mx-3">
+            <i class="fas fa-map-marker-alt mr-1"></i>添加到地图
+        </button>
+        <button class="flex items-center justify-center w-12 h-12 rounded-full bg-gray-100 text-gray-600">
+            <i class="fas fa-ellipsis-h"></i>
+        </button>
+    </div>
+</body>
+</html> 

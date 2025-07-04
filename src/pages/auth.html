@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>授权设置 - 人生记录</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <style>
+        .permission-card {
+            background-color: white;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 16px;
+            border: 1px solid #f3f4f6;
+            transition: all 0.3s;
+        }
+        
+        .permission-card.active {
+            border-color: #6366f1;
+            box-shadow: 0 6px 12px rgba(99, 102, 241, 0.15);
+        }
+        
+        .permission-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 16px;
+        }
+        
+        .progress-ring {
+            transform: rotate(-90deg);
+            transform-origin: center;
+        }
+        
+        .progress-ring-circle {
+            stroke-dasharray: 283;
+            transition: stroke-dashoffset 0.3s;
+        }
+        
+        .setup-indicator {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 2px solid #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #9ca3af;
+            transition: all 0.3s;
+        }
+        
+        .setup-indicator.active {
+            border-color: #6366f1;
+            background-color: #6366f1;
+            color: white;
+        }
+        
+        .setup-indicator.completed {
+            border-color: #10b981;
+            background-color: #10b981;
+            color: white;
+        }
+        
+        .setup-line {
+            height: 2px;
+            background-color: #e5e7eb;
+            flex: 1;
+            margin: 0 8px;
+            transition: all 0.3s;
+        }
+        
+        .setup-line.active {
+            background-color: #6366f1;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- 状态栏 -->
+    <div class="status-bar">
+        <div>9:41</div>
+        <div>
+            <i class="fas fa-signal"></i>
+            <i class="fas fa-wifi ml-1"></i>
+            <i class="fas fa-battery-full ml-1"></i>
+        </div>
+    </div>
+    
+    <!-- 页面头部 -->
+    <div class="page-header">
+        <div class="flex items-center">
+            <button class="mr-2" onclick="history.back()">
+                <i class="fas fa-arrow-left text-gray-600"></i>
+            </button>
+            <h1 class="text-xl font-bold">初始化设置</h1>
+        </div>
+    </div>
+    
+    <!-- 主页内容区域 -->
+    <div class="page-content pb-24">
+        <!-- 进度指示器 -->
+        <div class="flex items-center justify-between px-4 mb-8">
+            <div class="setup-indicator active completed">
+                <i class="fas fa-check"></i>
+            </div>
+            <div class="setup-line active"></div>
+            <div class="setup-indicator active">
+                2
+            </div>
+            <div class="setup-line"></div>
+            <div class="setup-indicator">
+                3
+            </div>
+            <div class="setup-line"></div>
+            <div class="setup-indicator">
+                4
+            </div>
+        </div>
+        
+        <!-- 页面标题 -->
+        <div class="px-4 mb-6">
+            <h2 class="text-2xl font-bold text-gray-800 mb-1">授权访问</h2>
+            <p class="text-gray-500">请允许我们访问您的相册，以便自动整理和创建您的人生记录</p>
+        </div>
+        
+        <!-- 权限卡片组 -->
+        <div class="px-4 mb-8">
+            <div class="permission-card active">
+                <div class="flex items-center mb-4">
+                    <div class="permission-icon bg-indigo-100">
+                        <i class="fas fa-images text-indigo-600 text-xl"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-bold text-gray-800">相册访问</h3>
+                        <p class="text-sm text-gray-500">访问您的照片库以分析和整理记忆</p>
+                    </div>
+                    <div class="ml-3">
+                        <div class="relative inline-block w-12 h-6 rounded-full bg-indigo-600">
+                            <div class="absolute right-1 top-1 w-4 h-4 rounded-full bg-white shadow"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-sm text-gray-500">
+                    <p>我们将仅在您的设备上分析照片，保护您的隐私</p>
+                </div>
+            </div>
+            
+            <div class="permission-card">
+                <div class="flex items-center mb-4">
+                    <div class="permission-icon bg-green-100">
+                        <i class="fas fa-map-marker-alt text-green-600 text-xl"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-bold text-gray-800">位置服务</h3>
+                        <p class="text-sm text-gray-500">记录位置信息以创建足迹地图</p>
+                    </div>
+                    <div class="ml-3">
+                        <div class="relative inline-block w-12 h-6 rounded-full bg-gray-200">
+                            <div class="absolute left-1 top-1 w-4 h-4 rounded-full bg-white shadow"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-sm text-gray-500">
+                    <p>可让我们读取照片中的位置数据，帮助绘制您的旅行轨迹</p>
+                </div>
+            </div>
+            
+            <div class="permission-card">
+                <div class="flex items-center mb-4">
+                    <div class="permission-icon bg-amber-100">
+                        <i class="fas fa-bell text-amber-600 text-xl"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-bold text-gray-800">通知</h3>
+                        <p class="text-sm text-gray-500">接收重要的回忆提醒和分析结果</p>
+                    </div>
+                    <div class="ml-3">
+                        <div class="relative inline-block w-12 h-6 rounded-full bg-gray-200">
+                            <div class="absolute left-1 top-1 w-4 h-4 rounded-full bg-white shadow"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-sm text-gray-500">
+                    <p>我们会在完成分析或发现特殊记忆时通知您</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 数据分析设置 -->
+        <div class="px-4 mb-8">
+            <h3 class="text-lg font-bold text-gray-800 mb-4">数据分析设置</h3>
+            
+            <div class="bg-white rounded-xl p-4 shadow-sm mb-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center mr-3">
+                            <i class="fas fa-brain text-indigo-600"></i>
+                        </div>
+                        <div>
+                            <div class="text-gray-800 font-medium">AI照片分析</div>
+                            <div class="text-xs text-gray-500">分析照片内容、人脸和场景</div>
+                        </div>
+                    </div>
+                    <div class="relative inline-block w-12 h-6 rounded-full bg-indigo-600">
+                        <div class="absolute right-1 top-1 w-4 h-4 rounded-full bg-white shadow"></div>
+                    </div>
+                </div>
+                <div class="bg-indigo-50 rounded-lg p-3">
+                    <div class="text-xs text-indigo-600 mb-1 font-medium">
+                        <i class="fas fa-info-circle mr-1"></i>隐私说明
+                    </div>
+                    <p class="text-xs text-gray-600">照片分析在您的设备上进行，我们不会上传您的原始照片</p>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-xl p-4 shadow-sm">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center mr-3">
+                            <i class="fas fa-cog text-green-600"></i>
+                        </div>
+                        <div>
+                            <div class="text-gray-800 font-medium">自动整理</div>
+                            <div class="text-xs text-gray-500">根据时间和地点自动分类</div>
+                        </div>
+                    </div>
+                    <div class="relative inline-block w-12 h-6 rounded-full bg-green-600">
+                        <div class="absolute right-1 top-1 w-4 h-4 rounded-full bg-white shadow"></div>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <div class="flex-1">
+                        <div class="text-sm font-medium text-gray-700 mb-1">分析范围</div>
+                        <div class="text-xs text-gray-500">选择要分析的照片时间范围</div>
+                    </div>
+                    <select class="bg-gray-100 text-gray-700 text-sm rounded-lg px-3 py-2 border-none">
+                        <option>全部照片</option>
+                        <option>最近一年</option>
+                        <option>最近三年</option>
+                        <option>自定义范围</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 初始化进度 -->
+        <div class="px-4 mb-8">
+            <div class="bg-white rounded-xl p-5 shadow-sm">
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="text-lg font-bold text-gray-800">初始化进度</h3>
+                    <div class="text-indigo-600 font-medium">0%</div>
+                </div>
+                
+                <div class="flex items-center mb-4">
+                    <svg class="w-16 h-16 mr-4" viewBox="0 0 100 100">
+                        <circle class="progress-ring-circle" cx="50" cy="50" r="45" fill="transparent" stroke="#e5e7eb" stroke-width="8"></circle>
+                        <circle class="progress-ring-circle" cx="50" cy="50" r="45" fill="transparent" stroke="#6366f1" stroke-width="8" stroke-dashoffset="283"></circle>
+                    </svg>
+                    <div class="flex-1">
+                        <p class="font-medium text-gray-800 mb-1">等待授权</p>
+                        <p class="text-sm text-gray-500">完成授权后开始分析您的照片</p>
+                    </div>
+                </div>
+                
+                <div class="text-xs text-gray-500">
+                    <p>初始化包括：照片扫描、位置提取、人脸识别、事件聚类、时间线生成</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 操作按钮 -->
+        <div class="px-4 flex flex-col space-y-3">
+            <button class="w-full bg-indigo-600 text-white font-medium py-4 rounded-xl text-center text-lg">
+                授权并开始分析
+            </button>
+            <button class="w-full bg-white text-gray-600 font-medium py-3 rounded-xl text-center border border-gray-300 text-lg">
+                稍后设置
+            </button>
+        </div>
+    </div>
+</body>
+</html> 

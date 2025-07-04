@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>首页 - 人生记录</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <style>
+        .header-wave {
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 30px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23f3f4f6' fill-opacity='1' d='M0,128L48,144C96,160,192,192,288,186.7C384,181,480,139,576,138.7C672,139,768,181,864,181.3C960,181,1056,139,1152,122.7C1248,107,1344,117,1392,122.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+        
+        .category-scroll {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        
+        .category-scroll::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .category-item {
+            min-width: 100px;
+            height: 100px;
+            border-radius: 12px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .category-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 10px;
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+            color: white;
+        }
+        
+        .memory-card {
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            margin-bottom: 16px;
+        }
+        
+        .memory-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .memory-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 16px;
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+            color: white;
+        }
+        
+        .memory-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background-color: rgba(79, 70, 229, 0.9);
+            color: white;
+            font-size: 12px;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+        
+        .insight-card {
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 12px;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .ai-badge {
+            font-size: 10px;
+            font-weight: bold;
+            color: white;
+            background-color: #6366F1;
+            padding: 2px 6px;
+            border-radius: 4px;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .story-card {
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            height: 150px;
+            background-size: cover;
+            background-position: center;
+            margin-bottom: 12px;
+        }
+        
+        .story-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.7));
+        }
+        
+        .story-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 16px;
+            color: white;
+        }
+
+        .monthly-review {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 16px;
+            color: white;
+            box-shadow: 0 4px 10px rgba(107, 114, 128, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- 状态栏 -->
+    <div class="status-bar">
+        <div>9:41</div>
+        <div>
+            <i class="fas fa-signal"></i>
+            <i class="fas fa-wifi ml-1"></i>
+            <i class="fas fa-battery-full ml-1"></i>
+        </div>
+    </div>
+    
+    <!-- 页面头部 -->
+    <div class="page-header bg-indigo-600 text-white relative pb-10">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center">
+                <h1 class="text-2xl font-bold">生活记忆</h1>
+                <span class="ml-2 bg-white bg-opacity-20 text-xs font-medium px-2 py-1 rounded-full">Beta</span>
+            </div>
+            <div class="flex">
+                <button class="w-8 h-8 rounded-full bg-white bg-opacity-20 flex items-center justify-center mr-2">
+                    <i class="fas fa-bell text-white"></i>
+                </button>
+                <button class="w-8 h-8 rounded-full bg-white bg-opacity-20 flex items-center justify-center">
+                    <i class="fas fa-search text-white"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- 用户信息 -->
+        <div class="flex items-center mt-6">
+            <div class="w-12 h-12 rounded-full bg-gray-200 mr-3 overflow-hidden">
+                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="用户头像" class="w-full h-full object-cover">
+            </div>
+            <div>
+                <div class="font-bold">李明，早上好！</div>
+                <div class="text-sm text-white text-opacity-80">今天是您记录的第487天</div>
+            </div>
+        </div>
+        
+        <div class="header-wave"></div>
+    </div>
+    
+    <!-- 主页内容区域 -->
+    <div class="page-content pb-20 -mt-4">
+        <!-- AI生成的月度回顾 -->
+        <div class="px-4 mb-6">
+            <div class="monthly-review">
+                <div class="flex items-start justify-between mb-3">
+                    <div>
+                        <div class="flex items-center mb-1">
+                            <div class="ai-badge mr-2">
+                                <i class="fas fa-robot text-xs mr-1"></i> AI生成
+                            </div>
+                            <span class="text-white text-opacity-80 text-xs">刚刚更新</span>
+                        </div>
+                        <h3 class="font-bold text-lg">您的六月记忆集锦</h3>
+                    </div>
+                    <div class="bg-white bg-opacity-20 rounded-full w-8 h-8 flex items-center justify-center">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <p class="text-sm text-white text-opacity-90">AI从您的127张照片中精选了9个精彩瞬间</p>
+                </div>
+                
+                <div class="grid grid-cols-3 gap-1.5 mb-3">
+                    <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=60" class="rounded-lg aspect-square object-cover">
+                    <img src="https://images.unsplash.com/photo-1583452916563-9431f1523801?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=60" class="rounded-lg aspect-square object-cover">
+                    <img src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=60" class="rounded-lg aspect-square object-cover">
+                </div>
+                
+                <button class="w-full bg-white bg-opacity-20 text-white rounded-lg py-2.5 font-medium">
+                    查看完整月度回顾
+                </button>
+            </div>
+        </div>
+        
+        <!-- 快速操作 -->
+        <div class="px-4 mb-6">
+            <div class="flex items-center justify-between mb-3">
+                <h2 class="text-lg font-bold text-gray-800">快速操作</h2>
+                <a href="#" class="text-indigo-600 text-sm">更多</a>
+            </div>
+            
+            <div class="grid grid-cols-4 gap-3">
+                <a href="category.html" class="flex flex-col items-center">
+                    <div class="w-14 h-14 rounded-full bg-indigo-100 flex items-center justify-center mb-1">
+                        <i class="fas fa-th-large text-indigo-600 text-xl"></i>
+                    </div>
+                    <span class="text-xs text-gray-600">全部分类</span>
+                </a>
+                
+                <a href="timeline.html" class="flex flex-col items-center">
+                    <div class="w-14 h-14 rounded-full bg-purple-100 flex items-center justify-center mb-1">
+                        <i class="fas fa-clock text-purple-600 text-xl"></i>
+                    </div>
+                    <span class="text-xs text-gray-600">时间线</span>
+                </a>
+                
+                <a href="stats.html" class="flex flex-col items-center">
+                    <div class="w-14 h-14 rounded-full bg-pink-100 flex items-center justify-center mb-1">
+                        <i class="fas fa-chart-pie text-pink-600 text-xl"></i>
+                    </div>
+                    <span class="text-xs text-gray-600">数据分析</span>
+                </a>
+                
+                <a href="map.html" class="flex flex-col items-center">
+                    <div class="w-14 h-14 rounded-full bg-green-100 flex items-center justify-center mb-1">
+                        <i class="fas fa-map-marked-alt text-green-600 text-xl"></i>
+                    </div>
+                    <span class="text-xs text-gray-600">足迹地图</span>
+                </a>
+            </div>
+        </div>
+        
+        <!-- 生活分类 -->
+        <div class="mb-6">
+            <div class="px-4 flex items-center justify-between mb-3">
+                <h2 class="text-lg font-bold text-gray-800">生活分类</h2>
+                <a href="category.html" class="text-indigo-600 text-sm">查看全部</a>
+            </div>
+            
+            <div class="category-scroll overflow-x-auto pl-4">
+                <div class="flex space-x-3 pb-2 w-max">
+                    <a href="#" class="category-item" style="background-image: url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60')">
+                        <div class="category-overlay">
+                            <div class="text-sm font-medium">学业</div>
+                        </div>
+                    </a>
+                    
+                    <a href="#" class="category-item" style="background-image: url('https://images.unsplash.com/photo-1631133227834-cc3fe696ca52?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60')">
+                        <div class="category-overlay">
+                            <div class="text-sm font-medium">家庭</div>
+                        </div>
+                    </a>
+                    
+                    <a href="#" class="category-item" style="background-image: url('https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60')">
+                        <div class="category-overlay">
+                            <div class="text-sm font-medium">恋爱</div>
+                        </div>
+                    </a>
+                    
+                    <a href="#" class="category-item" style="background-image: url('https://images.unsplash.com/photo-1484712401471-05c7215830eb?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60')">
+                        <div class="category-overlay">
+                            <div class="text-sm font-medium">日常</div>
+                        </div>
+                    </a>
+                    
+                    <a href="#" class="category-item" style="background-image: url('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60')">
+                        <div class="category-overlay">
+                            <div class="text-sm font-medium">旅游</div>
+                        </div>
+                    </a>
+                    
+                    <a href="#" class="category-item" style="background-image: url('https://images.unsplash.com/photo-1497032628192-86f99bcd76bc?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60')">
+                        <div class="category-overlay">
+                            <div class="text-sm font-medium">工作</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- AI智能洞察 -->
+        <div class="px-4 mb-6">
+            <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center">
+                    <h2 class="text-lg font-bold text-gray-800 mr-2">AI智能洞察</h2>
+                    <div class="ai-badge">
+                        <i class="fas fa-robot text-xs mr-1"></i> AI
+                    </div>
+                </div>
+                <a href="#" class="text-indigo-600 text-sm">更多</a>
+            </div>
+            
+            <div class="space-y-3">
+                <div class="insight-card">
+                    <div class="flex items-start">
+                        <div class="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center mr-3 flex-shrink-0">
+                            <i class="fas fa-map-marker-alt text-indigo-600"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-gray-800 mb-1">旅行爱好者</h3>
+                            <p class="text-sm text-gray-600 mb-2">今年您已经去过5个城市，比去年同期增加3个</p>
+                            <div class="flex space-x-1">
+                                <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?ixlib=rb-1.2.1&auto=format&fit=crop&w=50&h=50&q=60" class="w-10 h-10 rounded-lg object-cover">
+                                <img src="https://images.unsplash.com/photo-1514565131-fce0801e5785?ixlib=rb-1.2.1&auto=format&fit=crop&w=50&h=50&q=60" class="w-10 h-10 rounded-lg object-cover">
+                                <img src="https://images.unsplash.com/photo-1504197832061-98356e3dcdcf?ixlib=rb-1.2.1&auto=format&fit=crop&w=50&h=50&q=60" class="w-10 h-10 rounded-lg object-cover">
+                                <div class="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center text-xs text-gray-500">+2</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="insight-card">
+                    <div class="flex items-start">
+                        <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center mr-3 flex-shrink-0">
+                            <i class="fas fa-user-friends text-green-600"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-gray-800 mb-1">社交圈分析</h3>
+                            <p class="text-sm text-gray-600 mb-2">您和张伟最近互动频繁，照片中出现了12次</p>
+                            <div class="flex items-center space-x-2">
+                                <img src="https://randomuser.me/api/portraits/men/85.jpg" class="w-8 h-8 rounded-full object-cover">
+                                <div class="h-1 bg-gray-200 rounded-full flex-1">
+                                    <div class="h-1 bg-green-500 rounded-full" style="width: 80%"></div>
+                                </div>
+                                <span class="text-xs text-gray-500">80%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 回忆故事 -->
+        <div class="px-4 mb-6">
+            <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center">
+                    <h2 class="text-lg font-bold text-gray-800 mr-2">回忆故事</h2>
+                    <div class="ai-badge">
+                        <i class="fas fa-robot text-xs mr-1"></i> AI生成
+                    </div>
+                </div>
+                <a href="#" class="text-indigo-600 text-sm">全部</a>
+            </div>
+            
+            <div class="story-card" style="background-image: url('https://images.unsplash.com/photo-1551632811-561732d1e306?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60')">
+                <div class="story-content">
+                    <div class="text-xs text-gray-300 mb-1">2021年夏季</div>
+                    <h3 class="font-bold text-lg">青春毕业季</h3>
+                    <p class="text-sm text-gray-200">AI根据您的校园照片生成的毕业回忆</p>
+                </div>
+            </div>
+            
+            <div class="story-card" style="background-image: url('https://images.unsplash.com/photo-1471560090527-d1af5e4e6eb6?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60')">
+                <div class="story-content">
+                    <div class="text-xs text-gray-300 mb-1">2023年春节</div>
+                    <h3 class="font-bold text-lg">团圆时光</h3>
+                    <p class="text-sm text-gray-200">全家团聚的温馨瞬间</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 今日回忆 -->
+        <div class="px-4 mb-4">
+            <div class="flex items-center justify-between mb-3">
+                <h2 class="text-lg font-bold text-gray-800">今日回忆</h2>
+                <a href="timeline.html" class="text-indigo-600 text-sm">更多</a>
+            </div>
+            
+            <div class="memory-card">
+                <div class="memory-image" style="background-image: url('https://images.unsplash.com/photo-1501785888041-af3ef285b470?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60')">
+                    <div class="memory-badge">5年前的今天</div>
+                    <div class="memory-overlay">
+                        <h3 class="font-bold text-lg">西湖之旅</h3>
+                        <p class="text-sm text-gray-200">杭州·西湖</p>
+                    </div>
+                </div>
+                <div class="p-3 bg-white">
+                    <p class="text-gray-600 text-sm">和大学室友一起去西湖游玩的美好时光，现在回想起来依然觉得温暖。</p>
+                    <div class="flex items-center justify-between mt-2">
+                        <div class="text-xs text-gray-500">2018年6月30日</div>
+                        <div class="flex space-x-3">
+                            <button class="text-gray-500 text-sm">
+                                <i class="far fa-heart"></i>
+                            </button>
+                            <button class="text-gray-500 text-sm">
+                                <i class="far fa-comment"></i>
+                            </button>
+                            <button class="text-gray-500 text-sm">
+                                <i class="far fa-share-square"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 底部导航栏 -->
+    <div class="bottom-nav">
+        <a href="home.html" class="bottom-nav-item active">
+            <i class="fas fa-home"></i>
+            <span>首页</span>
+        </a>
+        <a href="timeline.html" class="bottom-nav-item">
+            <i class="fas fa-clock"></i>
+            <span>时间线</span>
+        </a>
+        <a href="upload.html" class="bottom-nav-item">
+            <div class="upload-button">
+                <i class="fas fa-plus"></i>
+            </div>
+        </a>
+        <a href="map.html" class="bottom-nav-item">
+            <i class="fas fa-map-marker-alt"></i>
+            <span>地图</span>
+        </a>
+        <a href="profile.html" class="bottom-nav-item">
+            <i class="fas fa-user"></i>
+            <span>我的</span>
+        </a>
+    </div>
+</body>
+</html> 
